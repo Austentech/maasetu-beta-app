@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "**Yes.** The pregnant-mother illustration is **not visible** in this screenshot (it appears to be hidden or positioned off-screen at 390px width), so there is no cropping or broken shapes to report.\n\n**Layout assessment:** The hero section renders **cleanly with no layout problems** at this width:\n- Typography, spacing, and alignment are correct\n- The two CTA buttons (\"For patients\" / \"For doctors\") stack properly without overflow\n- Text content is fully readable and well-padded\n- Bottom navigation bar displays correctly\n\nThe only notable observation is the **absence of the illustration** itself—if it's intended to be visible on mobile, it may need to be added or unhidden; if it's intentionally desktop-only, the layout works fine as a text-only hero.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1791531909,
+  "id": "20261009154504b6caf14b33b64edb",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "20261009154504b6caf14b33b64edb",
+  "usage": {
+    "completion_tokens": 165,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 441,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 606
+  }
+}

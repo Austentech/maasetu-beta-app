@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Based on a detailed examination of the SVG illustration, here is the art director's critique:\n\n1.  **Face Details:** **Yes, the face is visible and well-constructed.** The eye (closed), eyebrow, gentle smile, blush on the cheek, ear (with an earring), nose, lips, and chin are all present. They are stylized but correctly placed for a profile view facing left.\n2.  **Arms and Hands:** **The arms are natural in length** with the elbows positioned appropriately around the waist/hip area. Both hands are placed to naturally cradle the pregnant bump, with the fingers wrapping around the lower part of the belly.\n3.  **Neck Definition:** **The neck is well-defined.** There is a clear separation between the head and the neck, and the neckline of the dress is cleanly rendered against the skin tone without any bleeding or overlapping issues.\n4.  **Glitches:** **No significant glitches are present.** The illustration is clean. The shapes are solid, there are no stray lines or \"blobs,\" and the layering of elements (hair behind the face, arms over the dress) is handled correctly.\n5.  **Heart Placement:** **Yes, the heart is perfectly positioned.** It sits centrally between the two cradling hands on the bump and is fully visible, not covered by any other element.\n\n**Overall Verdict:** The illustration is technically sound, aesthetically pleasing, and meets all the specified criteria for a professional-quality vector graphic.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1791531519,
+  "id": "20261009153831ed07c96ad8014e5e",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "20261009153831ed07c96ad8014e5e",
+  "usage": {
+    "completion_tokens": 313,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 2849,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 3162
+  }
+}

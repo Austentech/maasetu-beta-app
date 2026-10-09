@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "1) **Yes.** The illustration is fully visible, rendering cleanly with no cropping, broken shapes, or text collisions.\n2) **Yes.** The pregnant woman reads clearly at this size; her silhouette, pose, and key features (like the heart on the belly) are distinct and easily recognizable.\n3) **No.** There are no apparent problems to fix; the layout and illustration are well-optimized for this mobile view.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1791531932,
+  "id": "20261009154530b1d1825ec2b44180",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "20261009154530b1d1825ec2b44180",
+  "usage": {
+    "completion_tokens": 90,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 463,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 553
+  }
+}

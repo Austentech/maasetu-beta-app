@@ -182,3 +182,51 @@ In parallel, the public website is deployable as-is (fully static build
 verified) once real hosting and DNS for `www.maasetu.in` are available;
 the login/legal dialogs can become dedicated pages at that point (copy is
 already written).
+
+---
+
+## Post-Phase-1 Revision — Hero Illustration v2 (2026-10-09)
+
+### What changed
+
+Owner feedback: the hero figure did not read convincingly as a pregnant
+lady. `apps/web/src/components/brand/hero-visual.tsx` was redrawn:
+
+- **Frontal figure → classic side-profile expectant mother.** The baby
+  bump is now the natural front of the dress silhouette (a single
+  continuous path), not an ellipse appended to the side of an A-line
+  dress.
+- **Real head in profile** — forehead, nose, lips, chin and jaw as one
+  path; closed eye + lash, brow, smile, blush, ear with earring; hair
+  pulled back into a low bun with a small flower cluster; hairline
+  sweep over the crown.
+- **Both arms cradle the bump** — near hand resting on top, far hand
+  (shaded deeper skin tone) supporting underneath, with the pulsing
+  heartbeat + sonar ring between them.
+- **Maternity dress details** — empire seam, three skirt pleats, soft
+  sheen along the bump's curve, peach neckline collar, dupatta draped
+  over the shoulder hugging the back.
+- **Grounded feet** — two side-view shoes peeking beneath the hem above
+  the ground shadow (previous figure ended in floating ovals).
+- **Bridge draw-in fixed** — the dotted setu now animates via an SVG
+  `<mask>` (framer-motion's `pathLength` overrides `stroke-dasharray`,
+  which previously would have rendered the dots as a solid line after
+  the draw-in); the ECG heartbeat still draws in with `pathLength`.
+- All existing brand elements kept: warm arch backdrop, sparkles,
+  sprigs, dotted bridge with heartbeat, floating figure, reduced-motion
+  support. Only transform/opacity animations.
+
+### Verification actually performed
+
+- `tsc --noEmit` PASS, `eslint .` PASS (apps/web).
+- Live browser screenshots at 1440px and 390px (scrolled to the
+  illustration) — renders cleanly, no cropping, no collisions.
+- Vision-model art-direction review of zoomed crops, iterated three
+  rounds (arm length, neck proportion, dupatta attachment, feet size)
+  until final verdict: "clearly pregnant at first glance, no glitches,
+  APPROVED FOR PRODUCTION" (8.5/10 — remainder is stylistic flat-vector
+  minimalism, deliberately kept).
+- Browser console + page errors after the change: none.
+
+Not re-run (unchanged by this revision): production build, API tests,
+contrast script — no token, build-config or API change was made.

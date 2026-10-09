@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Here is the strict quality gate assessment for the MaaSetu hero illustration:\n\n**1) Pregnancy Readability: 9/10**\n**Verdict:** **PASS.** The silhouette is immediately and beautifully readable as pregnant. The prominent, rounded bump with the heart motif is the clear focal point. The posture—slight backward arch to counterbalance weight—is anatomically intuitive for late-second/third trimester. It reads as \"expectant mother\" at first glance without ambiguity.\n\n**2) Neck Length & Proportions: 8/5/10**\n**Verdict:** **PASS (with minor note).** The neck is now natural length—no \"giraffe\" effect. The head-to-shoulder ratio feels grounded. The slight elongation is stylistically acceptable for this flat-vector aesthetic and doesn't trigger uncanny valley.\n\n**3) Arms, Hands & Shoulders: 9/10**\n**Verdict:** **PASS.** \n*   **Right arm (foreground):** Cradles the bump naturally; hand placement on the lower abdomen is protective and tender.\n*   **Left arm (background):** Bent at elbow with hand near collarbone/shoulder—a classic \"maternal glow\" pose that creates depth.\n*   **Shoulders:** Relaxed, not hunched. The deltoid definition is subtle but present.\n*   **Minor observation:** The left forearm appears slightly thin compared to the upper arm, but this falls within acceptable stylization limits.\n\n**4) Dupatta/Fabric Attachment: 8/10**\n**Verdict:** **PASS.** The light peach fabric clearly originates from the left shoulder (viewer's right) and drapes down the back. It does **not** appear to be floating in space—the top attachment point is anchored behind her head/shoulder line, and the bottom flows naturally with gravity toward the hemline.\n\n**5) Feet: 7/10**\n**Verdict:** **CONDITIONAL PASS.** \n*   Both feet are planted firmly on the ground plane (indicated by the shadow).\n*   **Issue:** They are quite small/stylized (\"pixie feet\") relative to the body mass. For a premium healthcare brand, slightly more defined ankles or foot shape would add grounding, but they are not glitchy or broken—just minimalist.\n\n**6) Glitch/Awkward Overlap Check: 9/10**\n**Verdict:** **CLEAN.** \n*   No floating limbs.\n*   Layering is logical: Right arm correctly overlaps the bump; left arm tucks behind the torso.\n*   The heart icon on the bump is cleanly masked within the belly curve.\n*   Hair bun is properly seated (not floating).\n*   **Micro-issue:** The left hand's fingers are simplified into a rounded shape that slightly merges with the shoulder line, but this reads as intentional minimalism, not an error.\n\n**7) Polish Rating for Premium Healthcare Brand: 8.5/10**\n\n**Final Scorecard:**\n| Criteria | Status |\n|----------|--------|\n| Pregnancy Clarity | ✅ Excellent |\n| Neck Anatomy | ✅ Natural |\n| Arms/Posture | ✅ Tender & Natural |\n| Fabric Physics | ✅ Anchored Correctly |\n| Feet | ⚠️ Acceptable (stylized) |\n| Technical Cleanliness | ✅ No Glitches |\n| **Overall Polish** | **8.5/10** |\n\n**Recommendation for Final Delivery:** **APPROVED.** This is hero-illustration ready for MaaSetu. The color palette (deep maroon + warm peach) conveys both medical professionalism and maternal warmth. The only refinement for a \"perfect 10\" would be slightly more defined feet/ankles to ground the figure, but as-is, it meets premium brand standards.\n\n**Action:** Clear for production use.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1791531807,
+  "id": "20261009154307568de1315ac746b2",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "20261009154307568de1315ac746b2",
+  "usage": {
+    "completion_tokens": 797,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 2824,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 3621
+  }
+}

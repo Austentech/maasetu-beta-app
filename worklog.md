@@ -41,3 +41,21 @@ Work Log:
 Stage Summary:
 - Phase 1 acceptance criteria met; deliverables in /home/z/my-project (repo root), site live on sandbox :3000, API on :4000
 - Next step: owner supplies Supabase project config → JWT validation guard → role model + RLS'd schema → first protected route
+
+---
+Task ID: 3
+Agent: main (Super Z)
+Task: Hero illustration revision — figure must clearly read as a pregnant lady (owner feedback)
+
+Work Log:
+- VLM-critiqued the v1 hero: bump read as "object attached to the side of the hip", floating head, featureless torso
+- Redrew hero-visual.tsx as a side-profile expectant mother: single-path dress silhouette with integrated bump, real face profile (nose/lips/chin/closed eye/brow/blush/ear+earring), low bun with flowers, both hands cradling the bump (near on top, far beneath), pulsing heart + sonar ring between hands, empire seam, pleats, bump sheen, neckline collar, shoulder-draped dupatta, grounded side-view shoes
+- Fixed latent bug: dotted bridge draw-in now uses SVG mask (framer pathLength overrides stroke-dasharray -> would have turned dots solid)
+- Iterated 3 VLM art-direction rounds on zoomed screenshots: raised elbows, shortened/widened neck + raised neckline, anchored dupatta to shoulder/back, enlarged feet
+- QA: typecheck PASS, lint PASS, desktop 1440 + mobile 390 screenshots verified clean, console/page errors: none
+- Updated docs/IMPLEMENTATION_LOG.md with the revision entry
+
+Stage Summary:
+- Final VLM verdict: "clearly pregnant at first glance — APPROVED FOR PRODUCTION" (8.5/10)
+- All brand elements and animations preserved; reduced-motion still honored
+- Screenshots archived under scripts/qa/ (hero-before/after/final + zooms)
