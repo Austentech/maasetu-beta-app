@@ -46,3 +46,6 @@ Thumbs.db
 scripts/.qa-*
 scripts/og-assets/
 .build-check/
+
+# Sandbox platform tooling (not product code)
+skills/
