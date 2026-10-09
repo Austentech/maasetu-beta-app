@@ -21,3 +21,23 @@ Work Log:
 
 Stage Summary:
 - Environment understood, brand assets identified, architecture plan set
+
+---
+Task ID: 2
+Agent: main (Super Z)
+Task: MaaSetu Phase 1 — monorepo foundation, public website, NestJS API, QA, docs
+
+Work Log:
+- Restructured scaffold into pnpm/bun dual workspace monorepo: apps/web (Next.js 16), apps/api (NestJS 12), packages/shared (type-only contracts); removed Prisma/SQLite and ~50 unused deps
+- Built brand asset pipeline (scripts/process_brand_assets.py) from owner-supplied mark + wordmark: transparent PNGs, favicon, apple-icon, OG image (VLM-verified clean)
+- Implemented web design system: brand tokens (AA-safe interactive pink #DC0E36), Fraunces+Inter, strict TS (removed ignoreBuildErrors), security headers + CSP, robots/sitemap/JSON-LD
+- Built all homepage sections with original honest copy + hand-crafted SVG hero illustration (framer-motion, reduced-motion aware), honest login/legal dialogs (single-route sandbox constraint), responsive header + app-style bottom nav
+- Built NestJS API foundation: /api/v1/health, validated env, envelope interceptor, exception filter, helmet, CORS allowlist, URI versioning
+- Fixed during work: TS7 incompatibility (pinned ^5), NestJS-12-ESM + Jest (—experimental-vm-modules via cross-env), rootDir shift from package.json imports (version.ts + sync test), PATH issue in root dev script, missing @types/node, missing site.ts write
+- QA executed: web+api typecheck/lint PASS; api tests 4/4 unit + 3/3 e2e PASS; live health endpoint verified; production build verified in isolated copy (100% static, standalone smoke test with full security headers); browser verification at 390/768/1440 widths incl. dialogs, accordion, bottom nav — 0 console/page/dev.log errors; 21/21 WCAG AA contrast checks
+- Wrote docs: README, PROJECT_CONTEXT, ARCHITECTURE, DEVELOPMENT_GUIDE, SECURITY, IMPLEMENTATION_LOG + .env.example
+- Git: Phase 1 committed on top of scaffold history (1a1484f + cleanup commit)
+
+Stage Summary:
+- Phase 1 acceptance criteria met; deliverables in /home/z/my-project (repo root), site live on sandbox :3000, API on :4000
+- Next step: owner supplies Supabase project config → JWT validation guard → role model + RLS'd schema → first protected route
