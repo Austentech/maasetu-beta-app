@@ -1,0 +1,26 @@
+{
+  "name": "maasetu",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MaaSetu — Because Every Mother Matters. Maternal healthcare platform monorepo (Next.js web app, NestJS API, shared contracts).",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "cd apps/web && ./node_modules/.bin/next dev -p 3000 2>&1 | tee ../dev.log",
+    "dev:api": "cd apps/api && bun run start:dev",
+    "build": "bun run build:web && bun run build:api",
+    "build:web": "cd apps/web && bun run build",
+    "build:api": "cd apps/api && bun run build",
+    "lint": "cd apps/web && bun run lint && cd ../api && bun run lint",
+    "typecheck": "cd apps/web && bun run typecheck && cd ../api && bun run typecheck",
+    "test": "cd apps/api && bun run test && bun run test:e2e",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "db:push": "echo \"MaaSetu Phase 1: no local database. Data layer is Supabase-managed PostgreSQL (see docs/ARCHITECTURE.md). Nothing to push.\""
+  },
+  "devDependencies": {
+    "prettier": "^3.9.9"
+  }
+}

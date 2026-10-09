@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #FFF9FA;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .arch {
+    position: absolute; right: 64px; top: 75px;
+    width: 480px; height: 480px;
+    background: #FFE3D5;
+    border-radius: 240px 240px 32px 32px;
+  }
+  .arch::after {
+    content: ''; position: absolute; inset: 28px;
+    background: #FFF9FA;
+    border-radius: 212px 212px 20px 20px;
+  }
+  .mark {
+    position: absolute; right: 64px; top: 75px;
+    width: 480px; height: 480px;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2;
+  }
+  .mark img { width: 320px; height: auto; }
+  .dot { position: absolute; border-radius: 999px; }
+  .d1 { width: 26px; height: 26px; background: #FFC6A8; left: 700px; top: 96px; }
+  .d2 { width: 54px; height: 54px; background: #FFE3E9; left: 636px; top: 470px; }
+  .content { position: relative; z-index: 3; padding-left: 88px; max-width: 660px; }
+  .wordmark { width: 380px; height: auto; display: block; }
+  .tagline {
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic; font-weight: 500;
+    font-size: 58px; line-height: 1.15;
+    color: #741A2F;
+    margin-top: 34px;
+  }
+  .tagline em { font-style: italic; color: #FD1843; }
+  .meta {
+    margin-top: 38px; display: flex; align-items: center; gap: 14px;
+    color: #6E4A52; font-size: 21px; font-weight: 500;
+  }
+  .meta .pill {
+    background: #FFF1F4; color: #DC0E36;
+    border: 1px solid #FFC9D5;
+    padding: 7px 18px; border-radius: 999px;
+    font-size: 18px; font-weight: 600;
+  }
+</style>
+</head>
+<body>
+  <span class="dot d1"></span>
+  <span class="dot d2"></span>
+  <div class="arch"></div>
+  <div class="mark"><img src="/home/z/my-project/scripts/og-assets/mark.png" alt="" /></div>
+  <div class="content">
+    <img class="wordmark" src="/home/z/my-project/scripts/og-assets/wordmark.png" alt="MaaSetu" />
+    <p class="tagline">Because <em>every</em> mother matters.</p>
+    <p class="meta">
+      <span class="pill">A maternal healthcare platform for India</span>
+      <span>www.maasetu.in</span>
+    </p>
+  </div>
+</body>
+</html>

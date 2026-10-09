@@ -1,2 +1,48 @@
-skills/
+# Dependencies
 node_modules/
+.pnpm-store/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+next-env.d.ts.map
+
+# Builds
+dist/
+build/
+*.tsbuildinfo
+
+# Environment & secrets — never commit real values
+.env
+.env.local
+.env.*.local
+apps/*/.env
+apps/*/.env.local
+!.env.example
+
+# Logs
+*.log
+logs/
+dev.log
+server.log
+
+# Test coverage
+coverage/
+
+# Sandbox platform artifacts (not part of the product)
+.zscripts/
+tests/*.sh
+upload/
+download/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Local QA / derived assets
+scripts/.qa-*
+scripts/og-assets/
+.build-check/
