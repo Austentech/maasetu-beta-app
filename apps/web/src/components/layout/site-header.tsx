@@ -1,44 +1,34 @@
 import Link from "next/link";
-import { Stethoscope, UserRound } from "lucide-react";
+import { Mail, Stethoscope, UserRound } from "lucide-react";
 
 import { Logo } from "@/components/brand/logo";
 import {
   DoctorLoginDialog,
   PatientLoginDialog,
 } from "@/components/dialogs/notice-dialogs";
+import { MainNavLinks } from "@/components/layout/main-nav-links";
 import { Button } from "@/components/ui/button";
-import { mainNav } from "@/config/site";
 
 /**
  * Sticky site header.
  *
  * Desktop (lg+): logo · primary navigation · patient & doctor login actions.
- * Smaller screens: logo plus compact icon entry points — full navigation
- * lives in the app-style bottom bar (see mobile-bottom-nav.tsx).
+ * Smaller screens: logo, a contact entry point and compact icon entry
+ * points — full navigation lives in the app-style bottom bar.
  */
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-line/70 bg-white/85 backdrop-blur-md">
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
         <Link
-          href="/#top"
-          aria-label="MaaSetu — back to top"
+          href="/"
+          aria-label="MaaSetu — home"
           className="rounded-lg outline-none focus-visible:ring-[3px] focus-visible:ring-ring/60"
         >
           <Logo markHeight={34} priority />
         </Link>
 
-        <nav aria-label="Primary" className="hidden items-center lg:flex">
-          {mainNav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="rounded-full px-4 py-2 text-[15px] text-ink-soft transition-colors hover:bg-brand-50 hover:text-brand-700"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        <MainNavLinks />
 
         <div className="flex items-center gap-2">
           <div className="hidden items-center gap-2.5 sm:flex">
@@ -50,7 +40,12 @@ export function SiteHeader() {
             />
           </div>
           {/* Compact entry points for the smallest screens. */}
-          <div className="flex items-center gap-2 sm:hidden">
+          <div className="flex items-center gap-1.5 sm:hidden">
+            <Button asChild variant="ghost" size="iconSm">
+              <Link href="/contact" aria-label="Contact MaaSetu">
+                <Mail />
+              </Link>
+            </Button>
             <PatientLoginDialog
               trigger={
                 <Button variant="outline" size="iconSm" aria-label="Patient login">

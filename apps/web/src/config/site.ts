@@ -25,19 +25,40 @@ export const siteConfig = {
   },
 } as const;
 
+/** Shared Open Graph image (1200x630, generated via scripts/og-image.html). */
+export const ogImage = {
+  url: "/og.png",
+  width: 1200,
+  height: 630,
+  alt: "MaaSetu — a mother's bridge. Because Every Mother Matters.",
+} as const;
+
+/** Primary navigation — real routes, shared by the header and the footer. */
 export const mainNav = [
-  { label: "About", href: "/#about" },
-  { label: "Our approach", href: "/#approach" },
-  { label: "For patients", href: "/#for-patients" },
-  { label: "For doctors", href: "/#for-doctors" },
-  { label: "Contact", href: "/#contact" },
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "For patients", href: "/patients" },
+  { label: "For doctors", href: "/doctors" },
+  { label: "Contact", href: "/contact" },
 ] as const;
 
-/** Section ids observed by the mobile bottom navigation. */
+/** Bottom navigation for phone and tablet widths — public pages only. */
 export const mobileNav = [
-  { id: "top", label: "Home" },
-  { id: "about", label: "About" },
-  { id: "approach", label: "Approach" },
-  { id: "for-patients", label: "Patients" },
-  { id: "for-doctors", label: "Doctors" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Patients", href: "/patients" },
+  { label: "Doctors", href: "/doctors" },
+] as const;
+
+/** Public routes for the sitemap. */
+export const publicRoutes = [
+  { path: "/", priority: 1 },
+  { path: "/about", priority: 0.9 },
+  { path: "/services", priority: 0.9 },
+  { path: "/patients", priority: 0.9 },
+  { path: "/doctors", priority: 0.9 },
+  { path: "/contact", priority: 0.8 },
+  { path: "/privacy", priority: 0.3 },
+  { path: "/terms", priority: 0.3 },
 ] as const;

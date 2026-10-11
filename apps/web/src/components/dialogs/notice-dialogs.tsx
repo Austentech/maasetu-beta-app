@@ -4,10 +4,12 @@ import { NoticeDialog } from "@/components/dialogs/notice-dialog";
 import { siteConfig } from "@/config/site";
 
 /**
- * Honest entry points and legal placeholders.
+ * Honest entry points for the future portals.
  *
- * Phase 1 has no authentication and no finalised legal documents. These
- * dialogs say exactly that — no fake sign-in, no empty policy pages.
+ * MaaSetu has no authentication yet. Patient and doctor sign-in are
+ * documented destinations (maa./doctors.maasetu.in) that are not live, so
+ * these dialogs say exactly that — no fake sign-in forms. Legal notices
+ * now live on their own pages (/privacy, /terms).
  */
 
 function DialogMark() {
@@ -83,62 +85,6 @@ export function DoctorLoginDialog({ trigger }: { trigger: React.ReactElement }) 
       <p>
         If you are a doctor, clinic or laboratory interested in shaping
         MaaSetu&apos;s early rollout, we would genuinely like to hear from you.
-      </p>
-      <EmailNote />
-    </NoticeDialog>
-  );
-}
-
-export function PrivacyDialog({ trigger }: { trigger: React.ReactElement }) {
-  return (
-    <NoticeDialog
-      trigger={trigger}
-      title="Privacy Policy"
-      description="In preparation — here is where we stand today."
-    >
-      <p>
-        Our Privacy Policy is being finalised and will be published before
-        MaaSetu collects any personal or health information. Until then, this
-        is our honest position:
-      </p>
-      <ul className="list-disc space-y-2 pl-5">
-        <li>This website collects no patient data and requires no account.</li>
-        <li>
-          Pregnancy records and medical history are among the most sensitive
-          information that exist. MaaSetu is being designed around
-          least-privilege access, role-based permissions and database-level
-          security — the details will be documented in the policy itself.
-        </li>
-        <li>
-          When the policy is ready, it will explain exactly what is collected,
-          why, and the choices you have.
-        </li>
-      </ul>
-      <EmailNote />
-    </NoticeDialog>
-  );
-}
-
-export function TermsDialog({ trigger }: { trigger: React.ReactElement }) {
-  return (
-    <NoticeDialog
-      trigger={trigger}
-      title="Terms of Service"
-      description="In preparation."
-    >
-      <p>
-        Our Terms of Service are being drafted and will be published before
-        any accounts or services become available.
-      </p>
-      <p>
-        Until then, please treat this website as what it is: an introduction
-        to MaaSetu while the platform is in development. It does not yet offer
-        medical services, consultations or booking, and nothing here should be
-        read as medical advice.
-      </p>
-      <p>
-        When the terms are finalised, they will govern the use of
-        MaaSetu&apos;s applications and services.
       </p>
       <EmailNote />
     </NoticeDialog>

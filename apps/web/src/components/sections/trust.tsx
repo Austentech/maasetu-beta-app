@@ -1,7 +1,6 @@
 import { HandHeart, Lock, ShieldCheck } from "lucide-react";
+import Link from "next/link";
 
-import { PrivacyDialog } from "@/components/dialogs/notice-dialogs";
-import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 
@@ -33,7 +32,7 @@ export function Trust() {
     <section id="trust" aria-labelledby="trust-heading" className="bg-canvas">
       <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 lg:py-28">
         <SectionHeading
-          index="06"
+          index="04"
           eyebrow="Trust & privacy"
           title={<span id="trust-heading">Care carries secrets. We carry them carefully.</span>}
           lead="A maternal health platform only deserves trust if it is honest about what it protects — and about what it does not yet claim to be."
@@ -60,17 +59,12 @@ export function Trust() {
         <Reveal delay={0.15}>
           <p className="mt-8 text-sm text-ink-soft/85">
             Read where our{" "}
-            <PrivacyDialog
-              trigger={
-                <Button
-                  variant="link"
-                  size="sm"
-                  className="h-auto px-0 text-sm text-brand-500"
-                >
-                  Privacy Policy
-                </Button>
-              }
-            />{" "}
+            <Link
+              href="/privacy"
+              className="font-medium text-brand-500 underline underline-offset-4 hover:text-brand-600"
+            >
+              Privacy position
+            </Link>{" "}
             stands today — including what we do not yet collect.
           </p>
         </Reveal>

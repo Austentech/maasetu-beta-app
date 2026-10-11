@@ -80,9 +80,16 @@ pnpm test:e2e     # Jest e2e tests (supertest against the real pipeline)
   regenerates `apps/web/public/brand/*`, the favicon and the Apple touch
   icon from `assets/brand/` (requires Pillow + NumPy). Re-run it if the
   owner supplies new logo sources; never hand-edit the derived assets.
+- **Hero image pipeline.** `python3 scripts/process_hero_asset.py` copies
+  the selected consultation illustration into
+  `apps/web/public/images/hero-consultation.png` and regenerates the LQIP
+  blur placeholder consumed by the hero component. If the hero artwork is
+  ever replaced, re-run this script and paste the printed base64 into the
+  `HERO_BLUR_DATA_URL` constant in `src/components/sections/hero.tsx`.
 - **OG image.** Rendered from `scripts/og-image.html` (1200×630) via a
   headless-browser screenshot; regenerate `apps/web/public/og.png` if brand
-  or copy changes.
+  or copy changes. The HTML references the current hero illustration via
+  `scripts/og-assets/` — re-stage those files if imagery changes.
 - **Contrast checks.** `python3 scripts/check_contrast.py` verifies every
   token pair used in the UI against WCAG AA. Run it after touching
   `globals.css` or button variants.
@@ -91,16 +98,27 @@ pnpm test:e2e     # Jest e2e tests (supertest against the real pipeline)
 
 - The platform supervisor (`.zscripts/dev.sh`, not part of the product)
   runs `bun install` → `bun run db:push` (no-op) → `bun run dev` (port 3000)
-  and keeps a dev-server log at the repository root (`dev.log`).
-- Only the `/` route is user-visible through the sandbox preview; login and
-  legal content therefore live in dialogs. On real hosting these can become
-  dedicated pages.
+  and keeps a dev-server log at `apps/dev.log` (the root `dev` script
+  tees output there). If the dev server dies (e.g. under memory
+  pressure), restart it with the root script: `cd apps/web &&
+  ./node_modules/.bin/next dev -p 3000` (or `bun run dev` at the root).
+- The sandbox gateway (Caddy, port 81) proxies **all paths** to the web
+  app — every public route is user-visible through the sandbox preview.
+  Login entry points remain dialogs because the portals do not exist yet.
 - The API (port 4000) is not exposed externally; the frontend can reach
   local services through the gateway using relative paths with
   `?XTransformPort=<port>`.
-- Production builds must not be run against the live sandbox app; build in
-  a copy of the repo instead (this is how the Phase 1 build was verified —
-  see IMPLEMENTATION_LOG.md).
+- Production builds must not be run against the live sandbox app. Build in
+  an isolated mirror instead: copy the sources (excluding `node_modules`
+  and `.next`), run `bun install --frozen-lockfile` inside the mirror, then
+  `bun run build` in `apps/web`. This is how the production build and the
+  Web Vitals measurements were verified — see IMPLEMENTATION_LOG.md.
+  Note: heavy copies (tar of the whole `node_modules`) can kill the
+  dev/API servers through memory pressure; prefer source-only mirrors.
+  In a monorepo, Next.js infers the workspace root from the lockfile and
+  emits the standalone server at
+  `.next/standalone/<path-from-root>/apps/web/server.js` — run it from
+  that directory.
 
 ## Troubleshooting
 

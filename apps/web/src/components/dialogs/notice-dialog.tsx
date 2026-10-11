@@ -18,9 +18,9 @@ interface NoticeDialogProps {
 }
 
 /**
- * Accessible in-page notice dialog used for the login entry points and
- * legal placeholders. The sandbox/Phase-1 constraint is a single public
- * route, so these honest notices replace dedicated pages.
+ * Accessible in-page notice dialog used for the login entry points.
+ * The future portals are documented destinations that are not live, so
+ * these honest notices stand in for sign-in pages — no fake forms.
  */
 export function NoticeDialog({
   trigger,

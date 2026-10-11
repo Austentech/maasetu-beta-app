@@ -1,14 +1,28 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, HeartPulse } from "lucide-react";
 
-import { HeroVisual } from "@/components/brand/hero-visual";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/ui/reveal";
 import { siteConfig } from "@/config/site";
 
 /**
+ * The LQIP (low-quality image placeholder) for the hero illustration —
+ * a 12px JPEG base64 produced by scripts/process_hero_asset.py. The hero
+ * area paints instantly with this brand-warm blur (no layout shift) and
+ * sharpens when the full image arrives.
+ */
+const HERO_BLUR_DATA_URL =
+  "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA4KCw0LCQ4NDA0QDw4RFiQXFhQUFiwgIRokNC43NjMuMjI6QVNGOj1OPjIySGJJTlZYXV5dOEVmbWVabFNbXVn/2wBDAQ8QEBYTFioXFypZOzI7WVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVn/wAARCAAMAAwDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABAX/xAAiEAABBAIBBAMAAAAAAAAAAAABAgMEEQASIQUTQVEGFTH/xAAUAQEAAAAAAAAAAAAAAAAAAAAE/8QAGREAAwADAAAAAAAAAAAAAAAAAAERAhIh/9oADAMBAAIRAxEAPwC5PcXHjSpqpTnbdj6NpCrShX5x7N+cJ0Xqy/rGkupfeKSUhW6UnWzQNm7rzgPlch2O1CjNKIa7WxHsg0LxTTLUFpDLbaXBW2znJs84ecGapYU//9k=";
+
+/**
  * Hero — the welcome experience.
- * Emotionally meaningful, medically credible, honest about status.
+ *
+ * The visual is a warm prenatal consultation — an expectant mother with
+ * her doctor — generated for MaaSetu with the project's image-generation
+ * tooling (see docs/IMPLEMENTATION_LOG.md for provenance). It is the
+ * above-the-fold LCP image, so it loads with `priority` and a blur
+ * placeholder instead of any entrance animation that would delay paint.
  */
 export function Hero() {
   return (
@@ -49,13 +63,13 @@ export function Hero() {
           <Reveal delay={0.24}>
             <div className="mt-9 flex flex-wrap items-center gap-3.5">
               <Button asChild size="lg">
-                <Link href="#for-patients">
+                <Link href="/patients">
                   For patients
                   <ArrowRight aria-hidden="true" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <Link href="#for-doctors">For doctors</Link>
+                <Link href="/doctors">For doctors</Link>
               </Button>
             </div>
           </Reveal>
@@ -71,7 +85,24 @@ export function Hero() {
           </Reveal>
         </div>
 
-        <HeroVisual className="mx-auto w-full max-w-[30rem] lg:max-w-[34rem]" />
+        {/*
+          Deliberately NOT wrapped in an entrance animation: this is the
+          above-the-fold LCP image. The blur-placeholder → sharp transition
+          is the loading experience; nothing waits on JavaScript to appear.
+        */}
+        <figure className="relative mx-auto w-full max-w-[30rem] overflow-hidden rounded-[1.75rem] shadow-[0_24px_60px_-32px_rgba(74,16,28,0.35)] ring-1 ring-peach-300/60 lg:max-w-[33rem]">
+          <Image
+            src="/images/hero-consultation.png"
+            alt="An expectant mother in a deep burgundy dress sits cradling her baby bump while her doctor, in a cream coat with a stethoscope, kneels beside her with a reassuring hand — a warm prenatal consultation."
+            width={1024}
+            height={1024}
+            priority
+            placeholder="blur"
+            blurDataURL={HERO_BLUR_DATA_URL}
+            sizes="(min-width: 1024px) 528px, (min-width: 640px) 480px, 100vw"
+            className="h-auto w-full"
+          />
+        </figure>
       </div>
     </section>
   );

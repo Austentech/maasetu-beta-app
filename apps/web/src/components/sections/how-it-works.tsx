@@ -28,7 +28,7 @@ export function HowItWorks() {
     <section id="how-it-works" aria-labelledby="how-heading" className="bg-white">
       <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 lg:py-28">
         <SectionHeading
-          index="03"
+          index="02"
           eyebrow="How MaaSetu works"
           title={<span id="how-heading">Three steps, taken in the right order</span>}
           lead="We are not open for bookings or consultations yet. When we are, this is how the journey will flow."

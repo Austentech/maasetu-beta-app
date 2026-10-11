@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   HeartHandshake,
   House,
@@ -14,43 +14,23 @@ import { mobileNav } from "@/config/site";
 import { cn } from "@/lib/utils";
 
 const navIcons = {
-  top: House,
-  about: Info,
-  approach: HeartHandshake,
-  "for-patients": UserRound,
-  "for-doctors": Stethoscope,
+  "/": House,
+  "/about": Info,
+  "/services": HeartHandshake,
+  "/patients": UserRound,
+  "/doctors": Stethoscope,
 } as const;
 
 /**
  * App-style bottom navigation for phone and tablet widths (below lg).
  *
- * Highlights the section currently in view via IntersectionObserver and
- * respects iOS safe areas. Only public anchors — no dashboard links,
- * because no dashboards exist yet.
+ * Highlights the page the visitor is actually on (route-based, replacing
+ * the earlier scroll-observer approach that only made sense for the
+ * single-page layout) and respects iOS safe areas. Public pages only —
+ * no dashboard links, because no dashboards exist yet.
  */
 export function MobileBottomNav() {
-  const [activeId, setActiveId] = useState<string>("top");
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        }
-      },
-      // A narrow band around the viewport centre decides the active section.
-      { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
-    );
-
-    const targets = mobileNav
-      .map((item) => document.getElementById(item.id))
-      .filter((el): el is HTMLElement => el !== null);
-    targets.forEach((el) => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
+  const pathname = usePathname();
 
   return (
     <nav
@@ -59,13 +39,16 @@ export function MobileBottomNav() {
     >
       <ul className="grid grid-cols-5 pb-[env(safe-area-inset-bottom)]">
         {mobileNav.map((item) => {
-          const Icon = navIcons[item.id];
-          const isActive = activeId === item.id;
+          const Icon = navIcons[item.href as keyof typeof navIcons];
+          const isActive =
+            item.href === "/"
+              ? pathname === "/"
+              : pathname.startsWith(item.href);
           return (
-            <li key={item.id}>
+            <li key={item.href}>
               <Link
-                href={`/#${item.id}`}
-                aria-current={isActive ? "true" : undefined}
+                href={item.href}
+                aria-current={isActive ? "page" : undefined}
                 className={cn(
                   "flex min-h-[3.25rem] flex-col items-center justify-center gap-0.5 px-1 pt-1.5 pb-2 text-[10.5px] leading-tight font-medium transition-colors",
                   isActive

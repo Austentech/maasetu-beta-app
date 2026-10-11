@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Yes, the copyright text and the \"Because Every Mother Matters\" tagline are covered or cut off by the bottom navigation bar.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1791712993,
+  "id": "2026101118031205981ecb33374250",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "2026101118031205981ecb33374250",
+  "usage": {
+    "completion_tokens": 27,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 1078,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 1105
+  }
+}

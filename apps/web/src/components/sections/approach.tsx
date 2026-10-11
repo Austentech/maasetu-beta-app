@@ -4,6 +4,7 @@ import {
   ScanSearch,
   Stethoscope,
 } from "lucide-react";
+import Link from "next/link";
 
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -41,7 +42,7 @@ export function Approach() {
       <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 lg:py-28">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
-            index="02"
+            index="01"
             eyebrow="Our approach"
             title={
               <span id="approach-heading">Care that is connected, not scattered</span>
@@ -74,6 +75,20 @@ export function Approach() {
             </Reveal>
           ))}
         </div>
+
+        <Reveal delay={0.15}>
+          <p className="mt-8 text-[15px] text-ink-soft">
+            How each area is intended to work — including what it may include
+            and its honest status — is laid out on the{" "}
+            <Link
+              href="/services"
+              className="font-medium text-brand-500 underline underline-offset-4 hover:text-brand-600"
+            >
+              services page
+            </Link>
+            .
+          </p>
+        </Reveal>
       </div>
     </section>
   );

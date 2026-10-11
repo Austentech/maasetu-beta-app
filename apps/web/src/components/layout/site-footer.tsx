@@ -2,16 +2,15 @@ import Link from "next/link";
 import { Instagram, Mail } from "lucide-react";
 
 import { Logo } from "@/components/brand/logo";
-import {
-  PrivacyDialog,
-  TermsDialog,
-} from "@/components/dialogs/notice-dialogs";
 import { Button } from "@/components/ui/button";
 import { mainNav, siteConfig } from "@/config/site";
 
 /**
  * Site footer. Bottom padding keeps content clear of the mobile bottom
  * navigation; on lg+ it returns to normal spacing.
+ *
+ * Legal entries link to the dedicated /privacy and /terms pages; the old
+ * in-page dialogs were placeholders from the single-route layout.
  */
 export function SiteFooter() {
   return (
@@ -49,6 +48,14 @@ export function SiteFooter() {
               Explore
             </h3>
             <ul className="mt-4 space-y-2.5 text-[15px]">
+              <li>
+                <Link
+                  href="/"
+                  className="rounded-md text-ink-soft transition-colors hover:text-brand-600"
+                >
+                  Home
+                </Link>
+              </li>
               {mainNav.map((item) => (
                 <li key={item.href}>
                   <Link
@@ -68,30 +75,24 @@ export function SiteFooter() {
             </h3>
             <ul className="mt-4 space-y-2.5 text-[15px]">
               <li>
-                <PrivacyDialog
-                  trigger={
-                    <Button
-                      variant="link"
-                      size="sm"
-                      className="h-auto px-0 text-[15px] text-ink-soft hover:text-brand-600"
-                    >
-                      Privacy Policy
-                    </Button>
-                  }
-                />
+                <Button
+                  asChild
+                  variant="link"
+                  size="sm"
+                  className="h-auto px-0 text-[15px] text-ink-soft hover:text-brand-600"
+                >
+                  <Link href="/privacy">Privacy</Link>
+                </Button>
               </li>
               <li>
-                <TermsDialog
-                  trigger={
-                    <Button
-                      variant="link"
-                      size="sm"
-                      className="h-auto px-0 text-[15px] text-ink-soft hover:text-brand-600"
-                    >
-                      Terms of Service
-                    </Button>
-                  }
-                />
+                <Button
+                  asChild
+                  variant="link"
+                  size="sm"
+                  className="h-auto px-0 text-[15px] text-ink-soft hover:text-brand-600"
+                >
+                  <Link href="/terms">Terms</Link>
+                </Button>
               </li>
             </ul>
             <p className="mt-6 text-sm leading-relaxed text-ink-soft">

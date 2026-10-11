@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "1. **Bottom Navigation:** Yes, the app-like bottom navigation is visible with 5 items (Home, About, Services, Patients, Doctors) including icons and labels. The **Home** page is correctly highlighted in red to indicate it is the current active page.\n2. **Content Overlap:** No, there is no overlap. The bottom navigation is fixed at the bottom, and the content above it has sufficient padding/margin so that text is not hidden behind it.\n3. **Header:** Yes, the header is clean and well-organized. It displays the \"MaaSetu\" logo on the left, followed by mail and user profile icons on the right, with a prominent red circular call-to-action button (likely for login/booking). The layout is uncluttered.\n4. **Hero Illustration:** The hero section consists of a large, bold typographic headline (\"From the first heartbeat...\") rather than a traditional illustration. It is well-sized, highly legible, and effectively utilizes the mobile screen width without feeling cramped.\n5. **Layout Problems:** There are no layout issues. There is no horizontal overflow, elements are properly spaced, and there are no instances of text collision or cramped components.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1791712795,
+  "id": "20261011175952f5678ec88f564d38",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "20261011175952f5678ec88f564d38",
+  "usage": {
+    "completion_tokens": 249,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 889,
+    "prompt_tokens_details": {
+      "cached_tokens": 2
+    },
+    "total_tokens": 1138
+  }
+}

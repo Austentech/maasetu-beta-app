@@ -20,19 +20,22 @@
     width: 480px; height: 480px;
     background: #FFE3D5;
     border-radius: 240px 240px 32px 32px;
+    overflow: hidden;
   }
   .arch::after {
     content: ''; position: absolute; inset: 28px;
     background: #FFF9FA;
     border-radius: 212px 212px 20px 20px;
+    overflow: hidden;
   }
-  .mark {
-    position: absolute; right: 64px; top: 75px;
-    width: 480px; height: 480px;
-    display: flex; align-items: center; justify-content: center;
+  .hero {
+    position: absolute; right: 92px; top: 103px;
+    width: 424px; height: 424px;
+    border-radius: 196px 196px 16px 16px;
+    overflow: hidden;
     z-index: 2;
   }
-  .mark img { width: 320px; height: auto; }
+  .hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .dot { position: absolute; border-radius: 999px; }
   .d1 { width: 26px; height: 26px; background: #FFC6A8; left: 700px; top: 96px; }
   .d2 { width: 54px; height: 54px; background: #FFE3E9; left: 636px; top: 470px; }
@@ -62,7 +65,7 @@
   <span class="dot d1"></span>
   <span class="dot d2"></span>
   <div class="arch"></div>
-  <div class="mark"><img src="/home/z/my-project/scripts/og-assets/mark.png" alt="" /></div>
+  <div class="hero"><img src="/home/z/my-project/scripts/og-assets/hero.png" alt="" /></div>
   <div class="content">
     <img class="wordmark" src="/home/z/my-project/scripts/og-assets/wordmark.png" alt="MaaSetu" />
     <p class="tagline">Because <em>every</em> mother matters.</p>

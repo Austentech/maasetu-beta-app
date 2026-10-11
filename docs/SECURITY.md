@@ -20,7 +20,9 @@ the security posture that exists today, the plan for the full product, and
 
 ### Website (`apps/web`)
 
-- **Security headers + CSP** (in `next.config.ts`, applied to all routes):
+- **Security headers + CSP** (in `next.config.ts`, applied to all routes —
+  re-verified against the production standalone build after the multi-page
+  conversion, on every public route):
   - `Content-Security-Policy` — restrictive; `frame-ancestors 'self'` plus
     the sandbox preview origin in production. Development relaxes
     `script-src` (`unsafe-eval` for Turbopack HMR) and omits
@@ -37,6 +39,10 @@ the security posture that exists today, the plan for the full product, and
 - **No unsafe HTML rendering.** The only `dangerouslySetInnerHTML` in the
   codebase renders a static, code-authored JSON-LD object.
 - **No client-side secrets, no auth state, no PII** in the public app.
+- **The contact page uses real channels only** — `mailto:` links and a
+  public Instagram profile. There is no contact form, because there is no
+  backend endpoint to submit one to; nothing pretends otherwise, and no
+  data is entered or transmitted from any public page.
 - React strict mode enabled; strict TypeScript.
 
 ### API (`apps/api`)

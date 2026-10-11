@@ -230,3 +230,176 @@ lady. `apps/web/src/components/brand/hero-visual.tsx` was redrawn:
 
 Not re-run (unchanged by this revision): production build, API tests,
 contrast script — no token, build-config or API change was made.
+
+---
+
+## Website Revision — Multi-Page, Hero Visual, Loading & Performance (2026-10-11)
+
+Owner brief: refine the existing site (do not rebuild) — replace the hero
+with a purposeful maternal-healthcare visual, convert the single-page site
+into a real multi-page website, add an appropriate branded loading
+experience, improve performance/a11y/SEO, keep everything honest, verify,
+and update the documentation.
+
+### 1. Hero visual
+
+- Generated 6 illustration candidates with the project's image-generation
+  tooling (z-ai CLI, 1024×1024). Two art-direction review rounds using a
+  vision model:
+  - Candidate A: rendered the prompt's opening words as large visible text
+    in the image — rejected.
+  - Photorealistic candidates: anatomically clean but read as "AI stock
+    photo" (the exact cliché the brief forbids) and clashed with the site's
+    flat editorial language — rejected.
+  - **Selected: a flat editorial consultation illustration** (expectant
+    mother in burgundy + doctor in cream coat with stethoscope). Verified:
+    no text artifacts, 5 fingers on every visible hand, clean faces,
+    correctly rendered stethoscope, no background-object glitches
+    (plant/monitor/frames all clean). Final review: 9.5/10, "production
+    ready".
+- Integrated as `apps/web/public/images/hero-consultation.png` (88 KB
+  source) via `next/image`: `priority`, explicit dimensions, responsive
+  `sizes`, and a generated LQIP blur placeholder
+  (`scripts/process_hero_asset.py`). The optimizer serves it as ~26 KB
+  WebP at 640px.
+- Provenance (stated honestly): AI-generated for MaaSetu with the
+  project's image-generation tooling during this session; not a
+  third-party licensed asset.
+- The previous hand-drawn pregnant-mother SVG was **kept** — it now opens
+  the About page.
+- `og.png` regenerated from `scripts/og-image.html` to feature the
+  consultation illustration in the brand arch (VLM-verified: crisp
+  wordmark, both faces visible, balanced).
+- Added `public/favicon.ico` (from the owner mark) to silence the browser's
+  legacy `/favicon.ico` 404.
+
+### 2. Multi-page conversion
+
+**Gateway re-test first:** the sandbox Caddyfile's default handler proxies
+*all* paths to the Next.js server — every route verified 200 through
+:81. The Phase 1 "single route" assumption was over-cautious, so real
+routes were built.
+
+Routes added (all server components, all static, each with own metadata,
+canonical and OG image; sitemap lists all 8):
+
+- `/about` — mission story + relocated mother SVG, name band, four values
+  (numbered editorial rows), honest status panel.
+- `/services` — care-journey diagram (new hand-drawn SVG: mother above the
+  dotted setu + heartbeat, three support pillars), four service areas as
+  alternating rows with "what this may include" + "Status: in development".
+- `/patients` — centered hero, four design-intent blocks, promise quote,
+  honest access status + login dialog CTA.
+- `/doctors` — burgundy band with intended tools, "questions we are asking
+  doctors" section, partner CTA (mailto with subject).
+- `/contact` — two channel cards (email/Instagram), "worth knowing" notes
+  (no-medical-details notice; why there is no form), audience routing. No
+  fake form: the NestJS API has only /health, and a mailto is the truthful
+  option.
+- `/privacy`, `/terms` — stage-accurate legal-information pages (numbered
+  sections, breadcrumbs, "last updated", no invented certifications or
+  legal review).
+- `not-found.tsx` — branded 404 ("This bridge doesn't lead anywhere yet").
+
+Home re-composed: Hero → Approach (01) → How it works (02) → Audience
+entry panels (03, new) → Trust (04) → FAQ (05) → Contact CTA band.
+Sections whose content moved to pages (`about`, `for-patients`,
+`for-doctors`, `contact`) were retired after relocation — content was
+preserved, not deleted.
+
+**Navigation:** `config/site.ts` now drives routes (`mainNav`,
+`mobileNav`, `publicRoutes`, shared `ogImage`). Header: logo → `/`,
+desktop nav with `aria-current` active states (new client component
+`main-nav-links.tsx`), mobile adds a contact icon link; login dialogs kept
+as the honest placeholder destination. Mobile bottom nav rewritten
+route-based (`usePathname`) — the IntersectionObserver scroll-tracking was
+removed (less JS, works on every route). Footer: real links to
+`/privacy` + `/terms` (the legal dialogs were removed with their content
+migrated).
+
+### 3. Loading experience (decision + implementation)
+
+**No blocking branded preloader, no `loading.tsx`, skeletons nowhere.**
+Documented rationale: all routes are static and server-rendered — content
+is ready at first paint, so a gate would only add waiting. The one genuine
+loading need (above-the-fold hero image) uses the blur-up LQIP with zero
+layout shift; the hero image has *no* entrance animation so nothing waits
+on JavaScript. Decisions recorded in ARCHITECTURE.md. Reduced-motion: all
+animated components already check `useReducedMotion()`; verified the site
+loads correctly under an emulated `prefers-reduced-motion`.
+
+### 4. Verification actually executed
+
+- `tsc --noEmit` (web): **pass**. `eslint .` (web): **pass**.
+- API untouched but re-verified: unit **4/4 pass**, e2e **3/3 pass**;
+  `GET /api/v1/health` 200 live (and via gateway `?XTransformPort=4000`).
+- Production build in an isolated mirror (sources + `bun install
+  --frozen-lockfile`; never built against the live sandbox app):
+  `next build` **pass** — 14 static routes (8 pages + 404 + icons/robots/
+  sitemap), TypeScript strict clean.
+- Standalone production server (port 3100): all 8 routes 200, unknown
+  route 404, full security headers verified (CSP incl. frame-ancestors,
+  HSTS, nosniff, Referrer-Policy, Permissions-Policy).
+- Measured Web Vitals on the production build (Chromium, localhost, **no
+  network throttling** — honest limitation): home desktop FCP 324 ms /
+  LCP 620 ms (LCP element = hero IMG) / CLS 0; about FCP 84 ms / LCP
+  184 ms / CLS 0; home mobile-390 FCP 72 ms / LCP 908 ms (LCP = hero
+  text) / CLS 0. Lighthouse CLI is not available in this sandbox — the
+  Performance API numbers above are the equivalent measurement actually
+  obtained.
+- Browser verification (fresh session, zero console/page errors):
+  desktop 1440, tablet 768, mobile 390 across all pages; nav active
+  states verified in the DOM (`aria-current`); patient-login dialog opens;
+  FAQ accordion opens; hero CTA navigates to /patients; footer legal links
+  navigate; bottom-nav/footer clearance measured geometrically (copyright
+  bottom 928px vs nav top 971px on tablet — 43px clear).
+- VLM design review of all pages: distinct layouts confirmed per page
+  (home hero-split; about asymmetric prose+art; services modular rows;
+  patients centered+grid; doctors dark split; contact cards; legal
+  article layouts). Ratings: doctors 9/10, contact 9/10, privacy 10/10,
+  terms 10/10, home 8/10.
+
+### 5. Issues encountered and fixed
+
+1. Rewriting `config/site.ts` (anchor `id` → route `href`) before the
+   bottom nav briefly broke every page ("Element type is invalid" —
+   `navIcons[item.id]` → undefined). Fixed by rewriting the bottom nav in
+   the same change; stale error entries remained in the browser session
+   log until a fresh session confirmed zero errors.
+2. `lucide-react@0.525` has no `MagnifyingGlassHeart` export — swapped to
+   `UserRoundSearch`.
+3. Unused `BRAND_300` constant in the new care-journey diagram — removed.
+4. A multi-edit on `trust.tsx` applied only partially (import line updated
+   while the `PrivacyDialog` usage remained) causing a transient
+   `ReferenceError: PrivacyDialog is not defined` in dev — completed the
+   edit cleanly, re-verified.
+5. Isolated production build: copying bun's symlinked `node_modules` with
+   `cp -rL` breaks bin shims and transitive resolution; a full-`tar` copy
+   conflicts with the live dev server. Solution: source-only mirror +
+   `bun install --frozen-lockfile`. Next.js also inferred the workspace
+   root from the lockfile, emitting the standalone server at
+   `.next/standalone/<path>/apps/web/server.js` — documented in
+   DEVELOPMENT_GUIDE.md.
+6. The heavy copy/build operations killed the sandbox dev server and API
+   (memory pressure). Both restarted (web via the root dev script on
+   :3000; API via `bun run start:dev` on :4000) and re-verified healthy,
+   including through the gateway. Restart procedure documented.
+
+### 6. Dependencies & files
+
+- No new npm packages. No new backend endpoints (API untouched).
+- New: 8 page routes, `not-found.tsx`, `page-hero.tsx`, `breadcrumb.tsx`,
+  `legal.tsx` shells, `main-nav-links.tsx`, `care-journey.tsx`,
+  `audience-entry.tsx`, `contact-cta.tsx`, `public/images/` (hero),
+  `public/favicon.ico`, `scripts/process_hero_asset.py`.
+- Retired (content relocated, not lost): section components `about.tsx`,
+  `for-patients.tsx`, `for-doctors.tsx`, `contact.tsx`; the legal dialogs
+  (`PrivacyDialog`/`TermsDialog`) from `notice-dialogs.tsx`.
+
+### Recommended next implementation step
+
+Unchanged from Phase 1: the owner supplies the Supabase project
+configuration → JWT validation guard in `apps/api` → role/permission model
++ first RLS'd schema migration → first genuinely protected route. The
+public website is deployable as-is (fully static build verified with
+measured Core Web Vitals).

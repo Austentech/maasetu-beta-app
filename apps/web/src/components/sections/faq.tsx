@@ -46,7 +46,7 @@ export function Faq() {
       <div className="mx-auto grid w-full max-w-6xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16 lg:py-28">
         <div>
           <SectionHeading
-            index="07"
+            index="05"
             eyebrow="Questions"
             title={<span id="faq-heading">Frequently asked, honestly answered</span>}
             lead="Everything you might reasonably want to know about what MaaSetu is today — and what it is not."

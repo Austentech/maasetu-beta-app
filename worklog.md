@@ -59,3 +59,23 @@ Stage Summary:
 - Final VLM verdict: "clearly pregnant at first glance — APPROVED FOR PRODUCTION" (8.5/10)
 - All brand elements and animations preserved; reduced-motion still honored
 - Screenshots archived under scripts/qa/ (hero-before/after/final + zooms)
+
+---
+Task ID: 4
+Agent: main (Super Z)
+Task: Website revision — hero visual, multi-page conversion, loading experience, performance, docs (owner brief: refine, do not rebuild)
+
+Work Log:
+- Inspected repo: single-page site, 9 anchor sections, dialogs for legal/login, standalone+CSP config; re-tested sandbox gateway → Caddyfile proxies ALL paths (single-route assumption was wrong) → multi-page viable
+- Hero: generated 6 illustration candidates (z-ai image CLI), 2 VLM art-direction rounds; rejected text-artifact + AI-stock-photo-photoreal candidates; selected flat editorial consultation illustration (mother + doctor); VLM defect scan clean (hands/faces/stethoscope/background); integrated via next/image priority + LQIP blur placeholder (scripts/process_hero_asset.py); regenerated og.png featuring the illustration; added favicon.ico
+- Multi-page: 8 routes built with distinct layouts (home re-composed; about reuses mother SVG; services gets hand-drawn care-journey SVG; patients/doctors/contact/privacy/terms original content; branded 404); per-page metadata + canonical + OG; sitemap lists all routes
+- Navigation: site.ts route-driven (mainNav/mobileNav/publicRoutes/ogImage); header active states via new main-nav-links client component + mobile contact icon; bottom nav rewritten route-based (usePathname, removed IntersectionObserver); footer links to real /privacy /terms; login dialogs kept as honest placeholders; retired 4 relocated section components
+- Loading decision: NO blocking preloader / NO loading.tsx (all routes static, SSR-first) — hero blur-up LQIP is the loading experience; documented in ARCHITECTURE.md
+- QA: web typecheck+lint PASS; API 4/4 unit + 3/3 e2e PASS + live health 200; production build in isolated mirror (source + bun install --frozen-lockfile) PASS — 14 static routes; standalone server: all routes 200, 404 works, full security headers; measured vitals (no throttling, honest caveat): home FCP 324/LCP 620/CLS 0, about 84/184/0, mobile home 72/908/0; fresh-session browser: zero console/page errors; active states/dialog/accordion/navigation verified; tablet/mobile layouts + footer/nav clearance measured geometrically; VLM design review all pages (doctors 9, contact 9, privacy 10, terms 10, home 8 /10)
+- Fixed along the way: navIcons id→href breakage, lucide MagnifyingGlassHeart missing, partial trust.tsx edit, isolated-build node_modules strategy (symlink farm breaks — use source mirror + bun install), dev+API servers killed by memory pressure → restarted & re-verified
+- Docs updated: README, PROJECT_CONTEXT, ARCHITECTURE, DEVELOPMENT_GUIDE, SECURITY, IMPLEMENTATION_LOG (+ this worklog)
+
+Stage Summary:
+- Multi-page honest website live on sandbox :3000 (all routes through gateway), API healthy on :4000
+- No new dependencies, no fake functionality, no new endpoints; all copy original and status-accurate
+- Next: owner Supabase config → JWT guard → role model + RLS schema → first protected route

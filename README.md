@@ -12,8 +12,9 @@ foundation, and a shared API-contract package.
 
 > **Status — honest, as always:** the platform itself (patient portal,
 > doctor portal, lab coordination) is **not implemented yet**. What exists
-> today is the production-oriented foundation, the complete public website,
-> and a verified, tested API health service. See
+> today is the production-oriented foundation, a complete **multi-page
+> public website** (home, about, services, patients, doctors, contact,
+> privacy, terms), and a verified, tested API health service. See
 > [`docs/PROJECT_CONTEXT.md`](docs/PROJECT_CONTEXT.md) for exactly what is
 > implemented and what is not.
 
@@ -27,12 +28,29 @@ maasetu/
 ├── packages/
 │   └── shared/         # Shared API contract types (type-only by design)
 ├── assets/brand/       # Owner-supplied logo source files (authoritative)
-├── scripts/            # Tooling: brand asset pipeline, WCAG contrast checks, OG image
+├── scripts/            # Tooling: brand asset pipeline, hero asset pipeline,
+│                       # WCAG contrast checks, OG image
 ├── docs/               # Project documentation (see below)
 ├── .env.example        # Every environment variable the owner may need to supply
 ├── pnpm-workspace.yaml # pnpm workspace (developers)
 └── package.json        # bun/npm workspace + orchestration scripts
 ```
+
+## Public website routes
+
+| Route | Purpose |
+| --- | --- |
+| `/` | Home — hero (consultation illustration), approach, how it works, audience entry points, trust, FAQ |
+| `/about` | Mission story, values, honest current status |
+| `/services` | The four intended service areas + care-journey diagram |
+| `/patients` | Patient-focused overview and honest status of patient access |
+| `/doctors` | Doctor-focused overview and the questions shaping the platform |
+| `/contact` | Real channels only (email + Instagram) — no form, by design |
+| `/privacy` | Privacy position for the current stage (no data collected) |
+| `/terms` | Terms for the website as it stands today |
+
+All pages are server-rendered and fully static; every page carries its own
+metadata, canonical URL and Open Graph image.
 
 ## Technology stack
 
@@ -83,7 +101,7 @@ From the repository root (`pnpm run <script>` or `bun run <script>`):
 | `test` | API unit tests + e2e tests (Jest) |
 | `db:push` | No-op in Phase 1 (data layer is Supabase PostgreSQL — see ARCHITECTURE) |
 
-## Verified results (Phase 1 exit)
+## Verified results (Phase 1 exit + website revision)
 
 Executed in this workspace — details and exact outputs in
 [`docs/IMPLEMENTATION_LOG.md`](docs/IMPLEMENTATION_LOG.md):
@@ -91,10 +109,16 @@ Executed in this workspace — details and exact outputs in
 - `tsc --noEmit` — **pass** (web + api, strict mode)
 - `eslint` — **pass** (web + api)
 - Jest — **7/7 tests pass** (4 unit + 3 e2e, including envelope + headers)
-- `next build` — **pass** (static prerender, strict TypeScript)
-- `nest build` + `node dist/main.js` — **pass**, `GET /api/v1/health` verified live
-- Browser verification — desktop / tablet / mobile, dialogs, accordion,
-  bottom navigation — **pass**, zero console errors, zero dev-server errors
+- `next build` — **pass** (all 8 public routes + 404 prerendered static;
+  verified in an isolated repo mirror)
+- Production server check — all routes 200, unknown routes 404, full
+  security headers (CSP/HSTS/etc.) verified live on the standalone build
+- Measured Web Vitals on the production build (localhost, no throttling):
+  home **FCP 324 ms / LCP 620 ms / CLS 0**; about FCP 84 ms / LCP 184 ms;
+  mobile home FCP 72 ms / LCP 908 ms / CLS 0
+- Browser verification — desktop / tablet / mobile across all pages,
+  navigation active states, dialogs, accordion, bottom navigation —
+  **pass**, zero console errors, zero page errors
 - WCAG AA — **21/21 token contrast checks pass** (`scripts/check_contrast.py`)
 
 ## Documentation
