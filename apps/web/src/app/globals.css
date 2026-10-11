@@ -126,4 +126,28 @@
     background-color: var(--color-peach-300);
     color: var(--color-brand-700);
   }
+
+  /* Heartbeat mark — the ECG ornament inside the hero headline.
+     Draws in once (no looping, no JavaScript); fully drawn and static
+     under reduced-motion preferences. */
+  .ecg-trace {
+    stroke-dasharray: 100;
+    animation: ecg-draw 1.2s cubic-bezier(0.33, 0.7, 0.3, 1) 0.45s both;
+  }
+
+  @keyframes ecg-draw {
+    from {
+      stroke-dashoffset: 100;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ecg-trace {
+      animation: none;
+      stroke-dasharray: none;
+    }
+  }
 }

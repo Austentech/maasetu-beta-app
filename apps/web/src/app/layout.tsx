@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import { Fraunces, Inter, Noto_Sans_Devanagari } from "next/font/google";
 
 import { MobileBottomNav } from "@/components/layout/mobile-bottom-nav";
 import { Providers } from "@/components/layout/providers";
@@ -18,6 +18,18 @@ const inter = Inter({
 const fraunces = Fraunces({
   subsets: ["latin"],
   variable: "--font-fraunces",
+  display: "swap",
+});
+
+/*
+ * Devanagari companion for the footer credit ("पाटलिपुत्र"). Self-hosted
+ * by next/font with the page; the Latin UI fonts carry no Devanagari
+ * glyphs, and relying on OS fallbacks renders tofu on some clients.
+ */
+const notoDevanagari = Noto_Sans_Devanagari({
+  subsets: ["devanagari"],
+  weight: ["400"],
+  variable: "--font-devanagari",
   display: "swap",
 });
 
@@ -77,9 +89,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
       <body
-        className={`${inter.variable} ${fraunces.variable} flex min-h-screen flex-col font-sans bg-background text-foreground antialiased`}
+        className={`${inter.variable} ${fraunces.variable} ${notoDevanagari.variable} flex min-h-screen flex-col font-sans bg-background text-foreground antialiased`}
       >
         <Providers>
           <a

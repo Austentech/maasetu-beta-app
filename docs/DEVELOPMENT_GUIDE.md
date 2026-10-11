@@ -102,6 +102,11 @@ pnpm test:e2e     # Jest e2e tests (supertest against the real pipeline)
   tees output there). If the dev server dies (e.g. under memory
   pressure), restart it with the root script: `cd apps/web &&
   ./node_modules/.bin/next dev -p 3000` (or `bun run dev` at the root).
+  Daemonize it so it survives the shell: `cd apps/web && setsid nohup
+  ./node_modules/.bin/next dev -p 3000 >> ../dev.log 2>&1 < /dev/null &`.
+  Note that sandbox memory pressure periodically kills background node
+  processes between sessions — check `curl localhost:3000` before
+  debugging "the site is down".
 - The sandbox gateway (Caddy, port 81) proxies **all paths** to the web
   app — every public route is user-visible through the sandbox preview.
   Login entry points remain dialogs because the portals do not exist yet.
@@ -109,16 +114,29 @@ pnpm test:e2e     # Jest e2e tests (supertest against the real pipeline)
   local services through the gateway using relative paths with
   `?XTransformPort=<port>`.
 - Production builds must not be run against the live sandbox app. Build in
-  an isolated mirror instead: copy the sources (excluding `node_modules`
-  and `.next`), run `bun install --frozen-lockfile` inside the mirror, then
-  `bun run build` in `apps/web`. This is how the production build and the
-  Web Vitals measurements were verified — see IMPLEMENTATION_LOG.md.
-  Note: heavy copies (tar of the whole `node_modules`) can kill the
-  dev/API servers through memory pressure; prefer source-only mirrors.
-  In a monorepo, Next.js infers the workspace root from the lockfile and
+  an isolated mirror instead: `scripts/prod_build.sh` does the whole flow
+  (source-only mirror + `bun install --frozen-lockfile` + `next build`).
+  This is how the production build and the Web Vitals measurements were
+  verified — see IMPLEMENTATION_LOG.md. Note: heavy copies (tar of the
+  whole `node_modules`) can kill the dev/API servers through memory
+  pressure; prefer source-only mirrors.
+- In a monorepo, Next.js infers the workspace root from the lockfile and
   emits the standalone server at
   `.next/standalone/<path-from-root>/apps/web/server.js` — run it from
-  that directory.
+  that directory with `PORT=<port> HOSTNAME=127.0.0.1 node server.js`.
+  **Important:** the standalone output does not bundle `static/` or
+  `public/` at that nested level — copy both there before serving, or
+  every CSS/font/chunk request 404s (pages still render from prerendered
+  HTML, which makes the breakage easy to miss):
+  `cp -r .next/static .next/standalone/<path>/apps/web/.next/ &&
+  cp -r public .next/standalone/<path>/apps/web/`.
+- Measurement tooling (this workspace): `scripts/measure_vitals.sh`
+  (FCP/CLS per route via the Performance API, fresh browser contexts),
+  `scripts/measure_lcp_bytes.sh` (buffered-observer LCP + payload
+  breakdown), `scripts/check_links.py` (anchor integrity crawl),
+  `scripts/check_contrast.py` (WCAG AA token pairs). All run against a
+  locally-served production build; none are throttled — treat the numbers
+  as lab measurements.
 
 ## Troubleshooting
 

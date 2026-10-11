@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Based on a pixel-level inspection of the provided crops:\n\n1.  **Hand Anatomy:** The visible hands (the doctor's pointing hand, the doctor's hand on the table, and the patient's hand on her belly) are stylized but anatomically consistent with the illustration's style. No obvious extra fingers or melting joints are present.\n2.  **Faces:** The facial features (eyes, nose, mouth) are clean, well-defined, and symmetrical. There are no glitches or smearing around the edges of the features.\n3.  **Pregnancy Timeline Chart:** The document on the table contains clean, solid black circles and straight lines. There are no artifacts, glitchy pixels, or distorted edges.\n4.  **Stray Marks/Artifacts:** The image is free of stray marks, noise, or odd objects. The edges are sharp and clean.\n5.  **Stethoscope:** The stethoscope is drawn correctly for this art style, with a clear chest piece, tubing, and earpieces.\n\nVerdict: **CLEAN**",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1791716196,
+  "id": "20261011185629fb24390ef4f243d8",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "20261011185629fb24390ef4f243d8",
+  "usage": {
+    "completion_tokens": 218,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 3242,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 3460
+  }
+}

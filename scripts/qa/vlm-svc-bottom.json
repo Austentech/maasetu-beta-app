@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "**1. Doctor consultations & follow-up (Card 02)**\n*   **Visible?** Yes. Clear.\n*   **Clean?** Yes. The mother (dark) and doctor (light) busts are distinct. The dotted arc and red heartbeat line are crisp.\n*   **Style-consistent?** Yes, matches the soft, rounded, hand-drawn aesthetic.\n*   **Glitches?** None observed.\n\n**2. Diagnostic coordination (Card 03)**\n*   **Visible?** Yes. Clear.\n*   **Clean?** Yes. Test tube on the left, report card on the right, connected by a dotted flow line with a droplet. Checkmark is clearly visible inside a circle on the card.\n*   **Style-consistent?** Yes.\n*   **Glitches?** None observed.\n\n**3. Organised health information (Card 04)**\n*   **Visible?** Yes. Clear.\n*   **Clean?** Yes. Three oval stage-marker chips are evenly spaced above an open book. A small sparkle icon is present to the right.\n*   **Style-consistent?** Yes.\n*   **Glitches?** None observed.\n\n**Overall Assessment:**\nAll three SVG diagrams are perfectly rendered within their respective left columns. There are no overlaps, cut-offs, stray marks, or misaligned elements. The visual style is highly consistent across all three cards.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1791716951,
+  "id": "2026101119090059d7e1464c7241b0",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "2026101119090059d7e1464c7241b0",
+  "usage": {
+    "completion_tokens": 292,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 3641,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 3933
+  }
+}

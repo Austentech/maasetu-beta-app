@@ -17,10 +17,13 @@ interface LogoProps {
  * scripts/process_brand_assets.py — the artwork is never redrawn.
  */
 export function Logo({ className, markHeight = 36, priority = false }: LogoProps) {
-  // mark.png is 900x686; wordmark.png is 900x216 (aspect 4.17).
-  const markWidth = Math.round((markHeight * 900) / 686);
+  // Web-sized sources: mark.png is 512x390, wordmark.png 512x123 (aspect
+  // 4.16) — resized from the owner-supplied originals by
+  // scripts/process_about_asset.py so the image optimizer no longer
+  // processes a 2000px file for a ~34px header mark.
+  const markWidth = Math.round((markHeight * 512) / 390);
   const wordmarkHeight = Math.round(markHeight * 0.66);
-  const wordmarkWidth = Math.round((wordmarkHeight * 900) / 216);
+  const wordmarkWidth = Math.round((wordmarkHeight * 512) / 123);
 
   return (
     <span className={cn("inline-flex items-center gap-2.5", className)}>

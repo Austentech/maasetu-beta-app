@@ -403,3 +403,243 @@ configuration → JWT validation guard in `apps/api` → role/permission model
 + first RLS'd schema migration → first genuinely protected route. The
 public website is deployable as-is (fully static build verified with
 measured Core Web Vitals).
+
+---
+
+## Final Frontend Refinement, Bug Fixes & Backend Readiness (2026-10-11)
+
+Owner brief: polish the existing site without rebuilding — fix the About
+and Services illustrations, correct the hero supporting line to the exact
+Hinglish wording, replace the red heartbeat word treatment with a designed
+icon, fix the "preloader", address the speed regression, fix remaining
+errors, add the Sankhya Stack footer credit, prepare for the backend
+phase, verify everything, and document honestly.
+
+### 1. Repository audit (before any change)
+
+- Git clean at `b8bcca3` (Task-4 state). Web typecheck + lint: **pass,
+  zero errors**. Dev log: all routes 200; no errors.
+- Browser audit across all 8 routes: **zero page errors**; exactly one
+  console warning on every route — Next.js `scroll-behavior: smooth`
+  without `data-scroll-behavior` on `<html>`.
+- **No preloader component exists anywhere in the codebase** (Providers
+  holds only `MotionConfig`; there is no loading.tsx, no gate, no timer).
+  The "preloader not working" report was investigated and root-caused
+  (see §4).
+- About page audit: exactly one illustration (the retired hero SVG — a
+  solo mother figure), no mother–doctor relationship, no coordinated-care
+  communication, vertical imbalance against the long prose column.
+- Services page audit: care-journey diagram + four service rows with
+  small lucide icons only — no per-service visuals.
+- Asset audit: `public/brand/mark.png` was still the 2000×2000 247 KB
+  original being processed by the image optimizer for a 34 px header
+  display (the real, measurable image-workload regression).
+
+### 2. Visual work
+
+**Hero (home):**
+- Supporting line replaced with the exact owner wording:
+  **"Bharat se, Bharat ki Maaon ke liye"** (verified character-for-
+  character in the served DOM; the pill keeps its HeartPulse icon).
+- The red `heartbeat` word treatment removed; replaced by a designed
+  **ECG pulse mark** — an inline SVG drawn for the brand (96×32 viewBox,
+  brand red, round caps, `pathLength=100`) that sits inside the headline
+  between "first" and "heartbeat", sized in em so it scales with the
+  responsive type. It animates once via a 12-line CSS keyframe
+  (`ecg-draw`, 1.2 s, 0.45 s delay, no looping, no JS) and is fully
+  static under `prefers-reduced-motion` (override verified present in
+  the compiled CSS). `aria-hidden` — decorative.
+- Hero paragraph polished to natural Hinglish ("…trusted doctors,
+  organised diagnostics, aur calm, reliable guidance — sab ek hi
+  coordinated journey mein."), keeping the honest in-development note.
+
+**About page:**
+- New mission illustration: a pregnant Indian mother in a burgundy saree
+  and her gynecologist at a clinic table, the doctor pointing at a
+  pregnancy timeline chart — the coordinated-care scene the page argues
+  for. Generated for MaaSetu with the project image-generation tooling
+  (z-ai CLI, 1024×1024, 77 KB); art-directed via two VLM rounds
+  (9.5/10 "publication-ready") plus a pixel-level zoom defect scan of
+  hands/faces/chart/stethoscope (**CLEAN**). Provenance: AI-generated
+  for MaaSetu during this session — not a third-party licensed asset.
+- Presented in the brand's **arch motif** (rounded-t arch crop, peach
+  ring, soft shadow) with a meaningful caption, so it reads distinctly
+  from the homepage hero. Integrated via `next/image` with generated
+  LQIP blur placeholder, explicit dimensions, responsive `sizes`,
+  lazy-loaded (below the fold on mobile). `scripts/process_about_asset.py`
+  added (asset + LQIP pipeline).
+- The retired solo-mother SVG (`hero-visual.tsx`) is now unused and was
+  deleted (no dead files).
+
+**Services page:**
+- Four **hand-drawn SVG spot diagrams** (`service-visuals.tsx`), one per
+  service area, sharing the care-journey visual DNA (dotted setu lines,
+  heartbeat, arch, brand palette): timeline with milestones + heartbeat +
+  heart (care coordination), mother + doctor busts held by a dotted arc
+  with heartbeat (consultations), test tube → verified report (diagnostics),
+  stage-marker chips above an open book (health information). Static,
+  server-rendered, zero client JS, `aria-hidden` (adjacent copy carries
+  meaning).
+- Card layout updated (flex-wrap left column) so the diagrams stack
+  cleanly on mobile — verified geometrically: 300×195 inside 358 px cards.
+- VLM review of both pages: care-journey + all four spots render clean,
+  style-consistent, content-matched; About composition rated excellent.
+
+### 3. Footer credit (shared component, all public pages)
+
+- Exact owner wording implemented once in `site-footer.tsx`, below the
+  primary footer content with its own hairline separator:
+  "Crafted with code and curiosity by Sankhya Stack 💡 Made in — पाटलिपुत्र"
+- "Made in — पाटलिपुत्र" is a `whitespace-nowrap` unit (never breaks;
+  measured 111 px single-line on 390 px viewport) and renders in
+  **Noto Sans Devanagari** loaded through `next/font/google`
+  (self-hosted, `--font-devanagari` variable, devanagari subset, weight
+  400) because the sandbox has no system Devanagari font (would render
+  tofu) and OS fallbacks are unreliable. Font lazy-loads (not preloaded).
+- Visually secondary: 13 px, `text-ink-soft/90`, centered; contrast
+  verified **5.89:1** (AA pass). VLM-verified proper glyph rendering.
+- Verified present in the served DOM on all 8 public routes.
+
+### 4. Loading strategy ("preloader") — root cause and resolution
+
+**Finding: there is no preloader in the codebase to fix.** The perceived
+"broken preloader" decomposes into three real causes, all addressed:
+
+1. **Above-fold copy was opacity-gated until JS hydration.** The hero
+   headline/paragraph/CTAs were wrapped in framer-motion `Reveal`
+   (`initial opacity:0`), so they rendered invisible in the SSR HTML and
+   only appeared after the client bundle hydrated. On the dev-server
+   preview (and any slow connection) this reads exactly as a stuck
+   loader. **Fix:** the entire hero copy block is now plain
+   server-rendered HTML — verified `opacity:0` count in the served hero
+   section is zero. Reveal remains only for below-the-fold sections.
+2. **Dev-mode compile time on first visit** (sandbox preview runs
+   `next dev`): measured 3.5 s compile for `/` on cold cache, then
+   40–130 ms per route. This is a property of the development server,
+   not the product — the production build prerenders all 14 routes
+   static (build verified; vitals below).
+3. **Hero/brand image work on cold cache**: the LQIP blur-up is the
+   intended loading experience and stays; the image-optimizer workload
+   was cut by resizing the logo sources (see §5).
+
+**Final strategy (unchanged in architecture, now documented):** static
+SSR-first pages; the LCP image uses `priority` + LQIP blur-up; no
+full-screen gate, no timers, no artificial delays, no loading.tsx (no
+genuinely async route segments exist); Devanagari font lazy-loads via
+`display: swap`. All ten behaviours in the owner's checklist are met —
+notably: nothing can remain "stuck" because nothing waits on state.
+
+### 5. Performance regression — causes and fixes
+
+**Investigated causes (evidence-based):**
+- Dev-server preview (compile on demand) — dominant cause of perceived
+  slowness; not a product defect (production numbers below).
+- 2000×2000 / 247 KB `mark.png` being optimized per request for a 34 px
+  header mark (and 107 KB wordmark at 900 px wide).
+- The hydration-gated hero copy (§4.1) delaying visible content.
+
+**Fixes applied:**
+- Logo sources resized for the web (mark 512×390 = 114 KB, wordmark
+  512×123 = 48 KB; originals preserved in `assets/brand/`); `logo.tsx`
+  dimension constants updated; favicon regenerated from the resized mark.
+  The optimizer now emits a **2.7 KB** mark at 96 px (previously
+  processing a 2000 px original).
+- Hero copy ungated (§4.1) — LCP text paints with the HTML.
+- No changes to fonts beyond adding the lazy Devanagari subset; no new
+  dependencies; no functionality removed.
+
+**Measured results (production standalone build, localhost, no
+throttling, fresh browser contexts per route):**
+
+| Route | FCP | LCP | CLS |
+| --- | --- | --- | --- |
+| Home (1440) | 476 ms | 400 ms | 0 |
+| Home (390) | 332 ms | 404 ms | 0 |
+| About (1440) | 320 ms | 1284 ms* | 0 |
+| Services (1440) | 324 ms | 348 ms | 0 |
+| Patients (1440) | 404 ms | 252 ms | 0 |
+| Doctors / Contact / Privacy / Terms | 228–384 ms | — | 0 |
+
+\* About's LCP is the lazy-loaded mission illustration, partially
+in-view on desktop's first viewport; within the "good" threshold and
+correctly *not* prioritized on mobile where it is below the fold.
+
+Payload audit (home): HTML 21 KB gz (122 KB raw), **210 KB compressed JS
+across 14 files** (React + Next runtime + framer-motion for the
+interactive components — Reveal/nav/dialogs/accordion), 133 KB fonts
+(Inter + Fraunces variable subsets, 3 files preloaded), ~103 KB images
+(hero 75 KB optimized + logos). Lighthouse CLI is not available in this
+sandbox; the Performance API numbers above are the measurements actually
+obtained.
+
+### 6. Error fixes
+
+- `scroll-behavior` warning → `data-scroll-behavior="smooth"` added to
+  `<html>`; fresh-reload console now completely clean on all routes
+  (previously one warning per route).
+- Transient dev-only module-not-found (a mis-typed import path during
+  editing) — corrected immediately; verified by clean reload.
+- Link integrity: all 8 pages crawled, all internal anchor targets
+  resolve (`scripts/check_links.py`, checked against the production
+  build).
+- No TypeScript, ESLint, hydration, key, nesting, image-src or metadata
+  errors found — web typecheck/lint pass and the browser audit shows
+  zero console/page errors on every route.
+- Sandbox environment issues (documented, not product defects): the dev
+  web server and the standalone measurement server are killed by
+  sandbox memory pressure between sessions; restart procedures are in
+  DEVELOPMENT_GUIDE.md. The monorepo standalone build serves from
+  `.next/standalone/scripts/prod-build/web/apps/web/` and needs
+  `static/` + `public/` copied there (script updated).
+
+### 7. Verification summary (this revision)
+
+- Web: `tsc --noEmit` **pass**, `eslint` **pass**.
+- API: unit **4/4 pass**, e2e **3/3 pass** (unchanged code, re-run for
+  the record); live `/api/v1/health` 200.
+- Production build in isolated mirror: **pass**, 14 static routes
+  (8 public + icons/robots/sitemap/404).
+- Standalone server: all routes 200; CSS/woff2/chunk/image requests all
+  200 after fixing the monorepo asset-copy level.
+- Browser: desktop 1440 / tablet 768 / mobile 390 — no horizontal
+  overflow on any route; footer credit single-line on mobile; bottom-nav
+  clearance intact; ECG mark renders in SSR HTML; VLM review of changed
+  pages clean (footer, services spots, about composition, hero
+  headline).
+- WCAG AA: 21/21 token checks pass; footer credit 5.89:1; ECG pink on
+  canvas 3.75:1 (graphical object, ≥3:1); reduced-motion override for
+  `ecg-trace` verified in compiled CSS.
+
+### 8. Backend readiness (frontend integration audit)
+
+- The web app uses **no environment variables** (only NODE_ENV for CSP);
+  no API client, no data fetching, no auth SDK — nothing is coupled to
+  mock data. All pages are static server components; interactive islands
+  are nav/dialog/accordion/reveal only.
+- Login entry points are honest dialogs documenting the future subdomains
+  (`maa.`, `doctors.maasetu.in`) — replace with real Supabase auth
+  redirects when backend phase lands.
+- Contact page is mailto-only by design (no endpoint exists for a form);
+  a future form needs a NestJS endpoint + validation + spam protection.
+- Type contracts await the backend: `packages/shared` is type-only and
+  ready to carry DTO types; no duplicated business rules exist in the
+  frontend.
+- Required from owner: Supabase project URL + anon key (browser-safe),
+  service-role key + JWT secret (server-only), CORS allowlist update for
+  the production origin.
+- Recommended backend order: (1) JWT validation guard in apps/api,
+  (2) role/permission model + RLS'd schema migration, (3) first protected
+  route behind the guard, (4) then frontend API client + login redirects.
+
+### 9. Files changed
+
+Modified: `hero.tsx`, `layout.tsx`, `globals.css`, `site-footer.tsx`,
+`logo.tsx`, `about/page.tsx`, `services/page.tsx`, `public/brand/mark.png`
++ `wordmark.png` (resized), `public/favicon.ico`, README.md, docs/*
+(all five), worklog.
+Added: `components/brand/service-visuals.tsx`,
+`public/images/about-consultation.png`, `scripts/process_about_asset.py`,
+`scripts/prod_build.sh`, `scripts/measure_vitals.sh`,
+`scripts/measure_lcp_bytes.sh`, `scripts/check_links.py`.
+Deleted: `components/brand/hero-visual.tsx` (fully superseded).
+No new npm dependencies; API untouched.

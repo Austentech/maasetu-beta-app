@@ -57,7 +57,12 @@ change.
 
 ## Current phase
 
-**Phase 1 — Foundation & public website.** Complete.
+**Phase 1 — Foundation & public website.** Complete, refined
+(2026-10-11: illustrations, hero messaging, loading/perf fixes, footer
+credit) and **ready for the backend phase** — the frontend has no
+environment variables, no API client and no mock coupling; the backend
+prerequisites and recommended order are listed at the end of
+IMPLEMENTATION_LOG.md §8.
 
 ## Implemented
 
@@ -72,9 +77,19 @@ change.
   image-generation tooling, VLM-verified for anatomy/credibility, stored
   locally at `apps/web/public/images/hero-consultation.png`, and served
   via `next/image` with `priority` and a generated blur placeholder. The
-  earlier hand-drawn pregnant-mother SVG illustration now opens the About
-  page. The OG image was regenerated to feature the consultation
-  illustration.
+  hero supporting line is the owner-specified Hinglish headline
+  **"Bharat se, Bharat ki Maaon ke liye"**, and the headline carries a
+  designed ECG pulse mark (inline SVG, CSS-only draw-once animation,
+  reduced-motion safe) in place of the earlier red word treatment.
+- **About mission illustration:** a pregnant Indian mother and her
+  gynecologist reviewing one pregnancy timeline together — generated for
+  MaaSetu with the project's image-generation tooling (VLM defect-scan
+  clean), presented in the brand's arch motif with LQIP blur-up,
+  lazy-loaded. Provenance documented in IMPLEMENTATION_LOG.md.
+- **Service-spot illustrations:** four hand-drawn SVG diagrams (one per
+  service area) sharing the care-journey visual DNA — dotted setu lines,
+  the heartbeat, the brand palette. Static server-rendered SVG, zero
+  client JavaScript.
 - Responsive navigation across all routes: desktop top bar with active
   states; app-style bottom navigation on phone/tablet (route-based,
   respects safe areas); patient and doctor entry points always reachable.
@@ -87,11 +102,17 @@ change.
   sitemap, robots, Organization JSON-LD — no invented facts.
 - Accessibility: semantic landmarks, skip link, keyboard focus states,
   aria labelling, WCAG AA-verified token contrast (21/21 checks).
-- Framer Motion used selectively (hero entrance, gentle section reveals,
-  heart pulse) with `prefers-reduced-motion` respected in every animated
-  component. The hero image itself has **no** entrance animation — the
-  blur-up placeholder is the loading experience (documented in
-  ARCHITECTURE.md).
+- Framer Motion used selectively (gentle section reveals, dialog/accordion
+  motion) with `prefers-reduced-motion` respected in every animated
+  component. **Above-the-fold hero copy is plain server-rendered HTML**
+  (no hydration-gated entrance); the hero image has **no** entrance
+  animation — the blur-up placeholder is the loading experience
+  (documented in ARCHITECTURE.md).
+- **Shared footer maker credit** on every public page: "Crafted with code
+  and curiosity by Sankhya Stack 💡 Made in — पाटलिपुत्र" — implemented
+  once in the shared footer component, with self-hosted Noto Sans
+  Devanagari (next/font, devanagari subset, lazy) so the Devanagari text
+  renders correctly on every client.
 - NestJS REST API foundation: `/api/v1/health`, validated environment,
   request validation pipe, response/error envelope, security headers,
   CORS allowlist, URI versioning, Jest unit + e2e tests.
@@ -146,13 +167,15 @@ change.
 - The website runs in dev mode inside the sandbox; the production build
   was verified in an isolated mirror of the repo (sources +
   `bun install --frozen-lockfile`), including measured Web Vitals — see
-  IMPLEMENTATION_LOG.md.
+  IMPLEMENTATION_LOG.md. **Note:** the sandbox dev server compiles routes
+  on first visit (~3.5 s for the home route cold) — this is dev-server
+  behaviour, not product slowness; the production build is fully static.
 - Web Vitals were measured on localhost without network throttling;
   absolute numbers will differ on real Indian mobile networks, but CLS 0
   and a single optimised LCP image hold by construction.
 - The API is not wired to the website yet (all pages are fully static —
   by intent; there is no data to fetch).
-- The hero illustration, OG image and favicons are generated assets;
-  regenerate them with the scripts in `scripts/` if inputs change.
+- The hero/About illustrations, OG image and favicons are generated
+  assets; regenerate them with the scripts in `scripts/` if inputs change.
 - Legal pages describe the current position; full policies must be
   finalised before accounts open.

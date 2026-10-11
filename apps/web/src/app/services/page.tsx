@@ -11,6 +11,12 @@ import {
 } from "lucide-react";
 
 import { CareJourney } from "@/components/brand/care-journey";
+import {
+  ConsultationVisual,
+  DiagnosticsVisual,
+  GuidanceVisual,
+  TimelineVisual,
+} from "@/components/brand/service-visuals";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/ui/page-hero";
 import { Reveal } from "@/components/ui/reveal";
@@ -32,6 +38,7 @@ export const metadata: Metadata = {
 const serviceAreas = [
   {
     icon: CalendarHeart,
+    visual: TimelineVisual,
     number: "01",
     title: "Pregnancy care coordination",
     intention:
@@ -44,6 +51,7 @@ const serviceAreas = [
   },
   {
     icon: Stethoscope,
+    visual: ConsultationVisual,
     number: "02",
     title: "Doctor consultations & follow-up",
     intention:
@@ -56,6 +64,7 @@ const serviceAreas = [
   },
   {
     icon: ScanSearch,
+    visual: DiagnosticsVisual,
     number: "03",
     title: "Diagnostic coordination",
     intention:
@@ -68,6 +77,7 @@ const serviceAreas = [
   },
   {
     icon: BookOpenText,
+    visual: GuidanceVisual,
     number: "04",
     title: "Organised health information",
     intention:
@@ -133,11 +143,11 @@ export default function ServicesPage() {
             {serviceAreas.map((area, index) => (
               <Reveal key={area.number} delay={0.04 * index}>
                 <article className="grid gap-6 rounded-2xl border border-line bg-white p-7 shadow-xs sm:p-9 lg:grid-cols-[13rem_1fr] lg:gap-10">
-                  <div className="flex items-start gap-4 lg:flex-col lg:gap-5">
+                  <div className="flex flex-wrap items-start gap-x-4 gap-y-5 lg:flex-col lg:gap-5">
                     <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-500">
                       <area.icon aria-hidden="true" className="size-6" strokeWidth={1.8} />
                     </span>
-                    <div>
+                    <div className="min-w-[9rem] flex-1 lg:min-w-0 lg:flex-none">
                       <p
                         aria-hidden="true"
                         className="font-display text-sm text-brand-300 italic"
@@ -147,6 +157,11 @@ export default function ServicesPage() {
                       <h3 className="font-display mt-1 text-xl leading-snug font-medium text-ink sm:text-[1.3rem]">
                         {area.title}
                       </h3>
+                    </div>
+                    {/* Service-spot illustration — the area's idea as a quiet
+                        hand-drawn diagram, matching the care-journey DNA. */}
+                    <div className="basis-full lg:basis-auto">
+                      <area.visual />
                     </div>
                   </div>
                   <div>

@@ -6,6 +6,13 @@ import { Button } from "@/components/ui/button";
 import { mainNav, siteConfig } from "@/config/site";
 
 /**
+ * Maker credit (exact owner-specified wording, rendered as three spans so
+ * "Made in — पाटलिपुत्र" never breaks across lines): "Crafted with code
+ * and curiosity by Sankhya Stack 💡 Made in — पाटलिपुत्र". The Devanagari
+ * text uses the self-hosted Noto Sans Devanagari variable (see
+ * app/layout.tsx). Kept visually secondary to the MaaSetu brand.
+ */
+/**
  * Site footer. Bottom padding keeps content clear of the mobile bottom
  * navigation; on lg+ it returns to normal spacing.
  *
@@ -106,6 +113,26 @@ export function SiteFooter() {
           <p>© {new Date().getFullYear()} MaaSetu. All rights reserved.</p>
           <p className="font-display text-brand-700 italic">
             {siteConfig.tagline}.
+          </p>
+        </div>
+
+        {/* Maker credit — below the primary footer content, separated by
+            extra space; wraps as a whole unit on narrow screens. */}
+        <div className="mt-5 border-t border-line/70 pt-5">
+          <p className="flex flex-wrap items-center justify-center gap-x-1.5 text-center text-[13px] leading-relaxed text-ink-soft/90">
+            <span>Crafted with code and curiosity by Sankhya Stack</span>
+            <span aria-hidden="true" className="select-none">
+              💡
+            </span>
+            <span
+              className="whitespace-nowrap"
+              style={{
+                fontFamily:
+                  "var(--font-devanagari), var(--font-sans)",
+              }}
+            >
+              Made in — पाटलिपुत्र
+            </span>
           </p>
         </div>
       </div>

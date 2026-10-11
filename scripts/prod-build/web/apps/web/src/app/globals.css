@@ -1,0 +1,153 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ------------------------------------------------------------------ */
+/* MaaSetu design tokens                                               */
+/* ------------------------------------------------------------------ */
+/* Brand palette:                                                      */
+/*   primary   #FD1843  — signature pink (display accents, logo)       */
+/*   secondary #741A2F  — deep burgundy (depth, text accents)           */
+/*   accent    #FFC6A8  — warm peach (gentle supporting elements)      */
+/*   canvas    #FFF9FA  — near-white background                        */
+/* ------------------------------------------------------------------ */
+
+@theme {
+  /* Signature brand pink ramp.
+     brand-400 is the exact brand colour (#FD1843): display sizes, icons,
+     decorative accents. brand-500/#DC0E36 is the interactive shade —
+     it meets WCAG AA (>= 4.5:1) for white text on filled buttons. */
+  --color-brand-50: #fff1f4;
+  --color-brand-100: #ffe3e9;
+  --color-brand-200: #ffc9d5;
+  --color-brand-300: #ffa3b7;
+  --color-brand-400: #fd1843;
+  --color-brand-500: #dc0e36;
+  --color-brand-600: #c00d30;
+  --color-brand-700: #741a2f;
+  --color-brand-800: #5e1425;
+  --color-brand-900: #47101c;
+
+  /* Warm peach ramp (secondary brand colour). */
+  --color-peach-100: #fff0e8;
+  --color-peach-200: #ffe3d5;
+  --color-peach-300: #ffc6a8;
+  --color-peach-400: #f2a97e;
+
+  /* Neutrals with the brand's warm cast. */
+  --color-canvas: #fff9fa;
+  --color-ink: #2a151b;
+  --color-ink-soft: #6e4a52;
+  --color-line: #f5e1e6;
+}
+
+/* Semantic shadcn/ui variables mapped onto the MaaSetu palette. */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+}
+
+/* MaaSetu is intentionally a light-only experience in Phase 1. */
+:root {
+  --radius: 0.875rem;
+  --background: #fff9fa;
+  --foreground: #2a151b;
+  --card: #ffffff;
+  --card-foreground: #2a151b;
+  --popover: #ffffff;
+  --popover-foreground: #2a151b;
+  --primary: #dc0e36;
+  --primary-foreground: #ffffff;
+  --secondary: #fff1f4;
+  --secondary-foreground: #741a2f;
+  --muted: #f8eef0;
+  --muted-foreground: #6e4a52;
+  --accent: #ffeae0;
+  --accent-foreground: #741a2f;
+  --destructive: #b3261e;
+  --destructive-foreground: #ffffff;
+  --border: #f5e1e6;
+  --input: #f5e1e6;
+  --ring: #fd1843;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Respect reduced-motion preferences for smooth scrolling. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Anchor targets clear the sticky header. */
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  ::selection {
+    background-color: var(--color-peach-300);
+    color: var(--color-brand-700);
+  }
+
+  /* Heartbeat mark — the ECG ornament inside the hero headline.
+     Draws in once (no looping, no JavaScript); fully drawn and static
+     under reduced-motion preferences. */
+  .ecg-trace {
+    stroke-dasharray: 100;
+    animation: ecg-draw 1.2s cubic-bezier(0.33, 0.7, 0.3, 1) 0.45s both;
+  }
+
+  @keyframes ecg-draw {
+    from {
+      stroke-dashoffset: 100;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ecg-trace {
+      animation: none;
+      stroke-dasharray: none;
+    }
+  }
+}

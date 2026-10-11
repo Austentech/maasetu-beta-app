@@ -79,3 +79,25 @@ Stage Summary:
 - Multi-page honest website live on sandbox :3000 (all routes through gateway), API healthy on :4000
 - No new dependencies, no fake functionality, no new endpoints; all copy original and status-accurate
 - Next: owner Supabase config → JWT guard → role model + RLS schema → first protected route
+
+---
+Task ID: 5
+Agent: main (Super Z)
+Task: Final frontend refinement, bug fixing & backend readiness (owner brief: fix About/Services illustrations, exact Hinglish hero line, ECG icon, preloader perception, speed regression, errors, Sankhya Stack footer credit, backend prep, verify + document)
+
+Work Log:
+- Audited repo at b8bcca3: typecheck/lint pass, zero page errors; one console warning on all routes (scroll-behavior); NO preloader exists anywhere (root-caused the perception instead); About had one solo-mother SVG; Services rows had icons only; mark.png was still 2000x2000/247KB for a 34px display
+- Hero: badge replaced with exact "Bharat se, Bharat ki Maaon ke liye" (DOM-verified); red heartbeat word treatment replaced with designed inline ECG SVG (CSS-only draw-once, reduced-motion safe, aria-hidden); paragraph polished to natural Hinglish; above-fold copy un-gated from framer-motion (SSR paints headline before JS)
+- About: new mother+gynecologist timeline illustration generated (z-ai, 2 VLM rounds 9.5/10 + zoom defect scan CLEAN), integrated with LQIP in brand arch crop + caption; hero-visual.tsx deleted (unused)
+- Services: 4 hand-drawn SVG spot diagrams (service-visuals.tsx) in care-journey DNA; card layout fixed for mobile stacking (300x195 in 358px cards, DOM-verified)
+- Footer: Sankhya Stack credit (exact wording incl. emoji + पाटलिपुत्र) in shared footer; Noto Sans Devanagari via next/font (sandbox has no Devanagari font); nowrap unit; 5.89:1 contrast; verified in DOM on all 8 routes; VLM-verified glyph rendering
+- Perf: logos resized for web (mark 512x390 114KB, wordmark 512x123 48KB; optimizer output 2.7KB at 96px); production build re-verified in isolated mirror (14 static routes); standalone asset-copy bug fixed (monorepo nested path); measured vitals: home FCP 476/LCP 400/CLS 0 desktop, 332/404/0 mobile; services LCP 348; about LCP 1284 (lazy, good); CLS 0 all routes; home payload ~210KB JS + 133KB fonts + 103KB img
+- Errors: data-scroll-behavior added (console fully clean after fresh reload); link crawl all-8-pages OK; transient import typo fixed immediately
+- Backend readiness: documented (web uses no env vars, no API client, no mock coupling; Supabase keys needed from owner; recommended order: JWT guard → RLS schema → first protected route → frontend client)
+- QA: web typecheck+lint PASS; API 4/4 unit + 3/3 e2e PASS; 21/21 WCAG AA contrast checks; no horizontal overflow at 390/768/1440 on any route; reduced-motion ECG override verified in compiled CSS; VLM reviews of footer/services/about/headline all clean
+- Docs: README, PROJECT_CONTEXT, ARCHITECTURE, DEVELOPMENT_GUIDE, SECURITY, IMPLEMENTATION_LOG all updated in place
+
+Stage Summary:
+- All acceptance criteria met with honest, measured verification; no new dependencies; API untouched; no fake functionality added
+- Known environment quirks documented: sandbox dev server needs daemonized restart after memory pressure; standalone monorepo build needs static/+public/ copied to the nested app dir
+- Next: owner supplies Supabase config → JWT validation guard → role model + RLS schema → first protected route

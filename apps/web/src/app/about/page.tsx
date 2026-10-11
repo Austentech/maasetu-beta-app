@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 import { ogImage } from "@/config/site";
 import { ArrowRight, CircleCheck } from "lucide-react";
 
-import { HeroVisual } from "@/components/brand/hero-visual";
 import { Button } from "@/components/ui/button";
 import { PageHero } from "@/components/ui/page-hero";
 import { Reveal } from "@/components/ui/reveal";
@@ -22,6 +22,10 @@ export const metadata: Metadata = {
     images: [ogImage],
   },
 };
+
+/** LQIP for the consultation illustration (12px JPEG, scripts/process_about_asset.py). */
+const ABOUT_BLUR_DATA_URL =
+  "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA4KCw0LCQ4NDA0QDw4RFiQXFhQUFiwgIRokNC43NjMuMjI6QVNGOj1OPjIySGJJTlZYXV5dOEVmbWVabFNbXVn/2wBDAQ8QEBYTFioXFypZOzI7WVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVn/wAARCAAMAAwDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAABQb/xAAhEAACAgEEAgMAAAAAAAAAAAACAwEEEQAFITESEyJBUf/EABUBAQEAAAAAAAAAAAAAAAAAAAIE/8QAGBEBAQEBAQAAAAAAAAAAAAAAAgEAA0H/2gAMAwEAAhEDEQA/AF62+M3LebVdTpEBjCQEccR2UzpFNq1UrrVesex8DmSEMZ5++O9Rlt79s39tWq4hSxvMTET3M5jrrVjQrrurNjh+QlAxj88R0aNX0RKhk83/2Q==";
 
 const values = [
   {
@@ -56,8 +60,12 @@ const statusPoints = [
 /**
  * About MaaSetu — the mission story, values and honest current status.
  *
- * The pregnant-mother illustration below was the original homepage visual;
- * it now opens this page's story (see docs/IMPLEMENTATION_LOG.md).
+ * The story section carries the mission illustration: a pregnant Indian
+ * mother and her gynecologist looking at one pregnancy timeline together
+ * — the coordinated-care scene the whole page argues for. Generated for
+ * MaaSetu with the project's image-generation tooling (provenance in
+ * docs/IMPLEMENTATION_LOG.md); presented in the brand's arch motif so it
+ * reads distinctly from the homepage hero.
  */
 export default function AboutPage() {
   return (
@@ -116,7 +124,24 @@ export default function AboutPage() {
           </div>
 
           <Reveal delay={0.1}>
-            <HeroVisual className="mx-auto w-full max-w-[26rem] lg:max-w-[30rem]" />
+            <figure className="mx-auto w-full max-w-[26rem] lg:max-w-[28rem]">
+              <div className="overflow-hidden rounded-b-[1.75rem] rounded-t-[15rem] shadow-[0_24px_60px_-32px_rgba(74,16,28,0.35)] ring-1 ring-peach-300/60">
+                <Image
+                  src="/images/about-consultation.png"
+                  alt="A pregnant Indian mother in a burgundy saree and her gynecologist in a cream coat sit together at a clinic table, the doctor pointing to a pregnancy timeline chart while speaking to her reassuringly."
+                  width={1024}
+                  height={1024}
+                  placeholder="blur"
+                  blurDataURL={ABOUT_BLUR_DATA_URL}
+                  sizes="(min-width: 1024px) 448px, (min-width: 640px) 420px, 100vw"
+                  className="h-auto w-full"
+                />
+              </div>
+              <figcaption className="mt-5 text-center text-[14.5px] leading-relaxed text-ink-soft">
+                The scene we are building for — a mother and her doctor
+                looking at one journey, together.
+              </figcaption>
+            </figure>
           </Reveal>
         </div>
       </section>

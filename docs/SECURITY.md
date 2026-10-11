@@ -38,6 +38,10 @@ the security posture that exists today, the plan for the full product, and
     IMPLEMENTATION_LOG.md).
 - **No unsafe HTML rendering.** The only `dangerouslySetInnerHTML` in the
   codebase renders a static, code-authored JSON-LD object.
+- **Fonts are self-hosted by the build** (`next/font/google` downloads at
+  build time and serves from `/_next/static`), including the Noto Sans
+  Devanagari subset added for the footer credit — no runtime requests to
+  third-party font CDNs, consistent with the CSP's `font-src 'self'`.
 - **No client-side secrets, no auth state, no PII** in the public app.
 - **The contact page uses real channels only** — `mailto:` links and a
   public Instagram profile. There is no contact form, because there is no
