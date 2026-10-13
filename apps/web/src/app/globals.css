@@ -150,4 +150,76 @@
       stroke-dasharray: none;
     }
   }
+
+  /* Preloader — the branded initial-load transition
+     (components/layout/preloader.tsx). Server-rendered into every full
+     document load; dismissed by its own client effect the moment React
+     hydrates. The keyframes below are a pure-CSS ceiling so that a failed
+     or disabled script bundle can never leave the overlay stuck: without
+     any JavaScript it fades itself out (1.6s → 2.6s) and stays hidden,
+     leaving the server-rendered page usable. It is a safety cap, not a
+     deliberate delay — the normal exit is far earlier, at hydration. */
+  .preloader {
+    opacity: 1;
+    transition: opacity 320ms ease;
+    animation: preloader-failsafe 1s ease 1.6s forwards;
+  }
+
+  .preloader[data-exiting] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @keyframes preloader-failsafe {
+    to {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  /* The gentle dotted ring — one slow, calm rotation. */
+  .preloader-ring {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: preloader-spin 26s linear infinite;
+  }
+
+  @keyframes preloader-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* The heartbeat trace draws in once — the same DNA as the hero's ECG
+     mark: no looping, no flashing, one quiet draw. */
+  .preloader-ecg {
+    stroke-dasharray: 100;
+    animation: preloader-ecg-draw 0.9s cubic-bezier(0.33, 0.7, 0.3, 1) 0.15s
+      both;
+  }
+
+  @keyframes preloader-ecg-draw {
+    from {
+      stroke-dashoffset: 100;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* The exit becomes instant; the failsafe ceiling is deliberately kept
+       (it is a safety mechanism, not decoration), while the decorative
+       ring and heartbeat animations are disabled entirely. */
+    .preloader {
+      transition: none;
+    }
+    .preloader-ring {
+      animation: none;
+    }
+    .preloader-ecg {
+      animation: none;
+      stroke-dasharray: none;
+    }
+  }
 }

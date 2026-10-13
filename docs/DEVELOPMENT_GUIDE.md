@@ -86,6 +86,26 @@ pnpm test:e2e     # Jest e2e tests (supertest against the real pipeline)
   blur placeholder consumed by the hero component. If the hero artwork is
   ever replaced, re-run this script and paste the printed base64 into the
   `HERO_BLUR_DATA_URL` constant in `src/components/sections/hero.tsx`.
+- **Services illustration pipeline (2026-10-13).**
+  `python3 scripts/process_services_assets.py` copies the two selected
+  Services illustrations into
+  `apps/web/public/images/services-expectant-mother.png` (route opener,
+  priority/LCP) and
+  `apps/web/public/images/services-doctor-consultation.png` (service area
+  02, lazy) and regenerates both LQIP base64 strings
+  (`scripts/services-lqip-mother.txt`, `scripts/services-lqip-consult.txt`).
+  If either artwork is replaced, re-run it and paste the printed base64
+  into the matching `*_BLUR_DATA_URL` constant in
+  `src/app/services/page.tsx`. Candidate generation + VLM selection
+  artifacts live in `scripts/services-candidates/`.
+- **Preloader.** The initial-load transition is
+  `apps/web/src/components/layout/preloader.tsx`, mounted once in the root
+  layout; its styles, failsafe keyframes and reduced-motion rules live in
+  the `@layer base` block of `globals.css` (search `.preloader`). The
+  behaviour contract (dismiss-at-hydration, CSS-only failsafe cap, never on
+  client navigation) is documented in `docs/ARCHITECTURE.md` — keep that
+  contract intact when touching it: never gate the dismissal on a timer or
+  a network request, and never remove the failsafe keyframes.
 - **OG image.** Rendered from `scripts/og-image.html` (1200×630) via a
   headless-browser screenshot; regenerate `apps/web/public/og.png` if brand
   or copy changes. The HTML references the current hero illustration via

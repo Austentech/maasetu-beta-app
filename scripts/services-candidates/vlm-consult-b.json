@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Here is the Art Director’s QA evaluation of the illustration for **MaaSetu**:\n\n**1. SUBJECT**\n*   **Pregnancy Status:** Yes, the subject is clearly and unmistakably pregnant with a full-term or near-term belly.\n*   **Appearance:** She presents as Indian (dark hair, warm skin tone, traditional/ethnic jewelry like bangles).\n*   **Pose & Expression:** Seated in a relaxed, upright posture (likely on a floor cushion or chair). Expression is serene, gentle, and content—appropriate for the maternal healthcare context.\n\n**2. ANATOMY**\n*   **Hands:** Hands are generally well-structured. Fingers appear to be the correct count (5 per hand) without obvious fusion or extra digits.\n*   **Face:** Facial features are symmetrical; eyes are soft and well-placed.\n*   **Proportions & Bump:** The pregnancy bump is plausible in size relative to her frame. Limb proportions look correct.\n*   **Defects:** *Minor observation:* The transition of the arm into the hand holding the object (phone/book) is slightly soft, but there are no glaring anatomical errors that distort the human form.\n\n**3. TEXT ARTIFACTS**\n*   **Status:** **CLEAN.**\n*   **Detail:** There is no gibberish text, pseudo-script, or \"hallucinated\" lettering visible on any floating icons, UI elements, or background documents. This is safe for print-quality use.\n\n**4. STYLE**\n*   **Technique:** Matches the brief perfectly. It is a cel-shaded, semi-realistic illustration with clean, confident dark line art.\n*   **Background:** Set against a solid, warm cream/off-white background which makes the subject pop.\n*   **Palette:** Utilizes a premium palette of deep burgundy, soft peach, and skin tones that aligns with a high-end healthcare brand identity.\n\n**5. COMPOSITION**\n*   **Focal Point:** The woman is the clear central focal point.\n*   **Whitespace:** There is generous use of negative space around the subject, preventing the image from feeling cluttered.\n*   **Mood:** Evokes a calm, trustworthy, and \"premium\" atmosphere suitable for expectant mothers.\n\n**6. VERDICT**\n*   **Score:** 9/10\n*   **Verdict:** **ACCEPT** (Ready for integration; minor polish on hand-line-weight is optional but not required).",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1791862449,
+  "id": "20261013113357af291a03e6df4142",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "20261013113357af291a03e6df4142",
+  "usage": {
+    "completion_tokens": 512,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 218,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 730
+  }
+}

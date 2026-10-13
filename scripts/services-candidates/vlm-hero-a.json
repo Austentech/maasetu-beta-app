@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Here is the Art Director QA evaluation for the MaaSetu illustration:\n\n**1. SUBJECT**\n*   **Pregnancy:** Yes, the subject is clearly and unmistakably pregnant with a prominent, well-defined bump.\n*   **Appearance:** She presents a distinct Indian appearance (dark hair, warm skin tone, traditional facial features).\n*   **Pose & Expression:** Seated in a relaxed, slightly reclined pose. Expression is serene, gentle, and content—appropriate for the maternal healthcare context.\n\n**2. ANATOMY**\n*   **Hands:** Hands are structurally sound; finger count is correct (5 per hand), and the proportions relative to the body are plausible.\n*   **Face:** Facial features are symmetrical and well-rendered.\n*   **Proportions & Bump:** Body proportions follow a realistic semi-stylized aesthetic. The pregnancy bump is anatomically plausible for the 3rd trimester (high and rounded) without looking unnatural or distorted.\n*   *Defects:* None detected.\n\n**3. TEXT ARTIFACTS**\n*   **Status:** **CLEAN.**\n*   There is no text, gibberish writing, or pseudo-scribbles visible on any elements (including the background icons, charts, or documents). This passes the print-quality standard.\n\n**4. STYLE**\n*   **Technique:** Matches the brief perfectly. It features clean, confident dark line art with cel-shaded semi-realistic coloring.\n*   **Palette:** The color palette utilizes warm peaches, soft skin tones, and deep burgundy/red accents against a warm cream/off-white background. It strongly aligns with a premium, trustworthy healthcare brand identity.\n\n**5. COMPOSITION**\n*   **Focal Point:** The woman’s face and the baby bump act as a strong, immediate focal point.\n*   **Whitespace:** Generous use of negative space (cream background) ensures the image does not feel cluttered.\n*   **Mood:** The composition evokes a calm, safe, and premium atmosphere suitable for the target audience.\n\n**6. VERDICT**\n*   **Score:** **9.5 / 10**\n*   **Verdict:** **ACCEPT** (High-quality execution that perfectly aligns with brand guidelines).",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1791862401,
+  "id": "20261013113311257835943ab24c92",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "20261013113311257835943ab24c92",
+  "usage": {
+    "completion_tokens": 466,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 218,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 684
+  }
+}

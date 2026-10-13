@@ -1,12 +1,16 @@
 /**
- * Service-spot illustrations — four small hand-drawn diagrams, one per
- * intended service area on /services.
+ * Service-spot illustrations — small hand-drawn diagrams for the service
+ * areas on /services that carry a diagram (01, 03, 04).
  *
  * They share the brand's visual DNA with the care-journey diagram
  * (dotted setu lines, the heartbeat, the arch, the brand palette) so the
- * page reads as one art-directed system rather than four stock graphics.
- * Each is decorative: the adjacent section copy carries the meaning, so
- * the SVGs are hidden from assistive technology.
+ * page reads as one art-directed system rather than stock graphics. Each
+ * is decorative: the adjacent section copy carries the meaning, so the
+ * SVGs are hidden from assistive technology.
+ *
+ * Area 02 (doctor consultations & follow-up) instead carries a full
+ * editorial illustration — services-doctor-consultation.png — because its
+ * meaning is a human relationship, not a diagram.
  *
  * Pure static SVG (server-rendered, no client JavaScript, no animation).
  */
@@ -16,8 +20,6 @@ const BRAND_700 = "#741A2F";
 const BRAND_300 = "#FFA3B7";
 const BRAND_200 = "#FFC9D5";
 const PEACH_200 = "#FFE3D5";
-const SKIN = "#F3B69A";
-const HAIR = "#5E1425";
 
 /** 01 — Pregnancy care coordination: one timeline, milestones, one heartbeat. */
 export function TimelineVisual() {
@@ -63,70 +65,6 @@ export function TimelineVisual() {
       <path
         d="M178 66.4 C176.2 63.4 171.8 63.2 171.2 67.3 C170.8 70.2 174.4 73.2 178 76 C181.6 73.2 185.2 70.2 184.8 67.3 C184.2 63.2 179.8 63.4 178 66.4 Z"
         fill={BRAND_700}
-      />
-    </svg>
-  );
-}
-
-/** 02 — Doctor consultations: two people in one conversation, held by a heartbeat. */
-export function ConsultationVisual() {
-  return (
-    <svg
-      viewBox="0 0 200 130"
-      aria-hidden="true"
-      className="h-auto w-full"
-      fill="none"
-    >
-      {/* Ground */}
-      <ellipse cx={100} cy={122} rx={72} ry={5} fill="#FFE3E9" />
-
-      {/* The mother (left) */}
-      <circle cx={47} cy={41} r={13} fill={HAIR} />
-      <circle cx={52} cy={44} r={13} fill={SKIN} />
-      <circle cx={40} cy={30} r={5.5} fill={BRAND_700} />
-      {/* Bust with a gently rounded bump */}
-      <path
-        d="M31 120 C31 94 41 77 53 75 C65 77 73 85 77 95 C83 91 91 93 93 101 C94 109 87 115 79 120 Z"
-        fill={BRAND_700}
-      />
-      <path
-        d="M84 101 C82.7 99.2 80.6 99.1 80.2 101.4 C80 103 81.8 104.5 84 106.2 C86.2 104.5 88 103 87.8 101.4 C87.4 99.1 85.3 99.2 84 101 Z"
-        fill={BRAND_400}
-      />
-
-      {/* The doctor (right) */}
-      <circle cx={153} cy={41} r={13} fill={HAIR} />
-      <circle cx={148} cy={44} r={13} fill={SKIN} />
-      <circle cx={160} cy={30} r={5.5} fill="#47101C" />
-      <path
-        d="M169 120 C169 94 159 77 147 75 C135 77 127 85 123 95 C117 91 109 93 107 101 C106 109 113 115 121 120 Z"
-        fill="#FFFFFF"
-        stroke={BRAND_200}
-        strokeWidth={2.5}
-      />
-      {/* Stethoscope */}
-      <path
-        d="M139 77 C139 86 135 90 131 91"
-        stroke={BRAND_400}
-        strokeWidth={2.5}
-        strokeLinecap="round"
-      />
-      <circle cx={131} cy={94} r={3.5} fill={BRAND_400} />
-
-      {/* The conversation held between them */}
-      <path
-        d="M78 72 C90 46 110 46 122 72"
-        stroke={BRAND_300}
-        strokeWidth={2.5}
-        strokeDasharray="0.1 8"
-        strokeLinecap="round"
-      />
-      <path
-        d="M89 48 L97 48 L100 39 L104 57 L107 48 L115 48"
-        stroke={BRAND_400}
-        strokeWidth={3}
-        strokeLinecap="round"
-        strokeLinejoin="round"
       />
     </svg>
   );

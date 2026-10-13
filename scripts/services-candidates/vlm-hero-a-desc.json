@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "The woman is depicted in a seated pose, facing forward with a calm and composed expression. She wears a flowing, long-sleeved garment in shades of blue and white, with intricate patterns adorning the fabric. Her hands rest gently in her lap, one over the other, suggesting a sense of tranquility. The background is a soft, muted blue, creating a serene atmosphere. Floating around her are delicate motifs such as flowers, leaves, or abstract shapes, adding an ethereal quality to the scene. The overall composition exudes elegance and peacefulness.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1791862771,
+  "id": "202610131139048191f5c1a6d94513",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "202610131139048191f5c1a6d94513",
+  "usage": {
+    "completion_tokens": 113,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 60,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 173
+  }
+}

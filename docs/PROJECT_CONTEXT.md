@@ -59,7 +59,8 @@ change.
 
 **Phase 1 — Foundation & public website.** Complete, refined
 (2026-10-11: illustrations, hero messaging, loading/perf fixes, footer
-credit) and **ready for the backend phase** — the frontend has no
+credit; 2026-10-13: Services illustrations + working branded preloader)
+and **ready for the backend phase** — the frontend has no
 environment variables, no API client and no mock coupling; the backend
 prerequisites and recommended order are listed at the end of
 IMPLEMENTATION_LOG.md §8.
@@ -86,10 +87,22 @@ IMPLEMENTATION_LOG.md §8.
   MaaSetu with the project's image-generation tooling (VLM defect-scan
   clean), presented in the brand's arch motif with LQIP blur-up,
   lazy-loaded. Provenance documented in IMPLEMENTATION_LOG.md.
-- **Service-spot illustrations:** four hand-drawn SVG diagrams (one per
-  service area) sharing the care-journey visual DNA — dotted setu lines,
+- **Service-spot illustrations:** three hand-drawn SVG diagrams (service
+  areas 01/03/04) sharing the care-journey visual DNA — dotted setu lines,
   the heartbeat, the brand palette. Static server-rendered SVG, zero
-  client JavaScript.
+  client JavaScript. Service area 02 (doctor consultations & follow-up)
+  instead carries a full editorial illustration — see below.
+- **Services-page illustrations (2026-10-13):** the route opener shows an
+  expectant Indian mother in a calm pregnancy-care context
+  (`apps/web/public/images/services-expectant-mother.png`, the route's
+  above-the-fold LCP: `priority` + preload + LQIP), and service area 02
+  carries a distinct in-person consultation scene — a gynecologist
+  listening attentively across a desk from the seated expectant mother
+  (`apps/web/public/images/services-doctor-consultation.png`, lazy +
+  LQIP). Both generated for MaaSetu with the project's image-generation
+  tooling, style-matched to the homepage/About illustrations, VLM-reviewed
+  with clean anatomy and zero text artifacts; provenance in
+  IMPLEMENTATION_LOG.md.
 - Responsive navigation across all routes: desktop top bar with active
   states; app-style bottom navigation on phone/tablet (route-based,
   respects safe areas); patient and doctor entry points always reachable.
@@ -108,6 +121,14 @@ IMPLEMENTATION_LOG.md §8.
   (no hydration-gated entrance); the hero image has **no** entrance
   animation — the blur-up placeholder is the loading experience
   (documented in ARCHITECTURE.md).
+- **Branded initial-load transition (2026-10-13):** a MaaSetu preloader
+  (emblem + wordmark on `#FFF9FA`) is server-rendered into every full
+  document load and dismisses itself the moment React hydrates — no
+  timers, no network waits, never on client-side navigation, with a
+  pure-CSS failsafe cap (~2.6 s) so a failed script bundle can never
+  leave it stuck. Reduced-motion disables all of its animations. The
+  earlier "no preloader" decision was superseded by the owner's explicit
+  request; see ARCHITECTURE.md for the full behaviour contract.
 - **Shared footer maker credit** on every public page: "Crafted with code
   and curiosity by Sankhya Stack 💡 Made in — पाटलिपुत्र" — implemented
   once in the shared footer component, with self-hosted Noto Sans

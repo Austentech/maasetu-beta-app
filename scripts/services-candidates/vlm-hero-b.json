@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Here is the Art Director QA evaluation for the MaaSetu illustration:\n\n**1. SUBJECT**\n*   **Pregnancy:** Yes, the subject is clearly and unmistakably pregnant with a prominent, well-defined bump.\n*   **Appearance:** She has a distinct Indian appearance (dark hair, warm skin tone, traditional facial features).\n*   **Pose & Expression:** She is seated in a relaxed, slightly reclined pose (likely on a sofa or floor cushion), cradling or resting hands near the bump. Her expression is serene, content, and gentle, conveying maternal warmth.\n\n**2. ANATOMY**\n*   **Hands:** Hands are generally well-structured; finger count appears correct (5 per hand). The rendering is stylized but anatomically plausible.\n*   **Face:** Facial features are symmetrical and attractive. Eyes are expressive.\n*   **Proportions & Bump:** Body proportions follow an idealized illustration style (slim limbs, full bump). The pregnancy bump is large, round, and positioned plausibly high on the torso.\n*   **Defects:** No glaring structural defects found. The anatomy is \"illustration perfect\" rather than photorealistic, which fits the brief.\n\n**3. TEXT ARTIFACTS**\n*   **Status:** **CLEAN.**\n*   **Detail:** There is no text, gibberish, or pseudo-lettering visible on any floating elements, clothing patterns, or background items. The illustration is free of AI-generated text hallucinations.\n\n**4. STYLE**\n*   **Technique:** Matches the brief perfectly. It features cel-shaded semi-realistic rendering with clean, confident dark line art (inked style).\n*   **Background:** Set against a solid, warm cream/off-white background.\n*   **Palette:** Utilizes a premium healthcare palette—rich burgundy/blush tones in the clothing/surroundings that complement the peach skin tones. It feels high-end and professional.\n\n**5. COMPOSITION**\n*   **Focal Point:** The woman’s face and the pregnancy bump act as strong, clear focal points.\n*   **Whitespace:** There is generous use of negative space (cream background), preventing the image from feeling cluttered. This allows for easy overlay of UI elements or text.\n*   **Mood:** The composition is balanced and stable, evoking a calm, reassuring, and premium mood suitable for maternal care.\n\n**6. VERDICT**\n*   **Score:** 9/10\n*   **Verdict:** **ACCEPT** (High-quality execution that perfectly aligns with the brand identity and technical requirements).",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1791862409,
+  "id": "20261013113321a691022abcec4cea",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "20261013113321a691022abcec4cea",
+  "usage": {
+    "completion_tokens": 538,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 218,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 756
+  }
+}

@@ -643,3 +643,176 @@ Added: `components/brand/service-visuals.tsx`,
 `scripts/measure_lcp_bytes.sh`, `scripts/check_links.py`.
 Deleted: `components/brand/hero-visual.tsx` (fully superseded).
 No new npm dependencies; API untouched.
+
+## Services Illustrations & Working Preloader (2026-10-13)
+
+Owner brief: two Services-page visuals were unsatisfactory (the hero had no
+pregnant-mother imagery — text opener plus journey diagram only — and
+service area 02 carried a small abstract spot diagram instead of a real
+consultation scene), and the preloader "has never worked". Scope: fix
+exactly these, verify, document. No unrelated redesign.
+
+### Root cause: why the preloader never worked
+
+Audited the root layout, providers, every component and route: **no
+preloader component existed anywhere in the repository** — the previous
+revision (2026-10-11) had deliberately removed the concept and documented
+a "no blocking preloader" decision in ARCHITECTURE.md. What the owner
+perceived as a broken preloader was: (a) the brief expecting one and none
+being delivered, plus (b) an earlier-revision hero copy gate (framer-motion
+`initial opacity: 0` until hydration) that had historically read as a
+stuck loader on slow first visits. The fix this time was not to repair a
+broken component but to implement the missing one correctly — and to
+supersede the documented decision, which the owner's explicit request
+outweighed.
+
+### Preloader implementation
+
+- New `apps/web/src/components/layout/preloader.tsx` (client component,
+  ~90 lines): branded overlay — MaaSetu emblem (dotted peach ring with a
+  26 s gentle rotation + a single brand-red ECG draw-in, the same visual
+  DNA as the hero's ECG headline mark) and the wordmark in Fraunces
+  burgundy with the letterspaced tagline on `#FFF9FA`.
+- Mounted once in the root layout (`layout.tsx`), so it is server-rendered
+  into the first HTML of **every full document load** (first visit,
+  refresh, direct deep-link) — it paints with the document, before any
+  JavaScript runs. No duplicate providers, no duplicate loaders.
+- **Exit is event-driven, not timer-driven**: the component's effect
+  dismisses the overlay the moment React finishes hydrating (one rAF for
+  a rendered frame), a 320 ms CSS fade hands off to the page, and the
+  element unmounts ~420 ms later. It waits on no request, no font event,
+  and no arbitrary delay.
+- **Pure-CSS failsafe** (`globals.css` `.preloader` keyframes): the
+  overlay's total lifetime is capped at ~2.6 s. If the script bundle
+  fails, JS is disabled, or hydration crashes, the overlay fades itself
+  out and stays hidden — the server-rendered page remains fully usable.
+  The cap is a safety ceiling, not a deliberate delay; on slow devices it
+  also guarantees content becomes visible at worst ~2.6 s.
+- **Never on client-side navigation**: the root layout stays mounted
+  across routes, and the component has already left the tree — verified
+  by navigating Home → Services and re-checking the DOM.
+- Accessibility: `aria-hidden` decorative overlay, no focusable elements
+  (cannot trap keyboard focus), stacked below the skip-to-content link,
+  all animations (ring rotation, ECG draw) disabled under
+  `prefers-reduced-motion` (verified in the compiled CSS); the failsafe
+  ceiling is deliberately kept under reduced motion because it is a
+  safety mechanism, not decoration.
+- No route-level `loading.tsx` added: all routes remain static — fake
+  skeletons on instantly-rendered content would be dishonest loading
+  theatre.
+
+### Services illustrations
+
+Generated with the project's image-generation tooling (z-ai CLI, 6
+candidates: 3 per slot), style-matched to the existing hero/About
+illustrations (cel-shaded semi-realistic, clean dark line art, warm cream
+background — verified against the existing assets' pixel palette, not
+just VLM descriptions). Selection via VLM rubric (the service was stable
+during the selection round): anatomy/hands/faces, pregnancy readability,
+text-artifact scan, style match, composition. Selected:
+
+- `public/images/services-expectant-mother.png` — serene expectant Indian
+  mother (burgundy dress, peach dupatta, hands cradling the bump) with
+  gentle care-coordination motifs; distinct from the homepage consultation
+  scene and the About timeline scene. 9.5/10, zero text artifacts.
+- `public/images/services-doctor-consultation.png` — in-person
+  consultation: gynecologist leaning forward, listening attentively,
+  across a desk from the seated expectant mother; distinct two-figure
+  composition (desk-between layout vs. the homepage's kneeling beside and
+  About's shared-timeline scenes). 9.5/10, zero text artifacts.
+
+Integration (`scripts/process_services_assets.py` mirrors the established
+hero/About LQIP pipeline):
+
+- Services opener extended: `PageHero` gained an optional `visual` prop —
+  when present it renders the homepage-hero two-column composition (copy
+  left, illustration right, stacked on mobile). All other pages pass no
+  `visual` and render exactly as before (verified: no other route's markup
+  changed). The mother illustration is the route's above-the-fold LCP:
+  `priority` (preload link verified in served HTML), LQIP blur, explicit
+  dimensions, responsive `sizes`.
+- Service area 02 ("Doctor consultations & follow-up") restructured as the
+  featured card: header row (icon, number, title) unchanged, body becomes
+  a text + 19 rem image column on desktop (stacked on mobile) with the
+  consultation illustration, LQIP blur, `loading="lazy"` (verified in
+  served HTML), a small honest figcaption, and meaningful alt text. The
+  other three areas keep their hand-drawn spot diagrams (area 02's
+  `ConsultationVisual` was removed as superseded; three remain).
+- Both images: no 404s, no console errors, correct responsive behaviour,
+  no layout shift (CLS 0 measured on /services).
+
+### Dead-code cleanup (directly related hygiene)
+
+Deleted five untracked, unimported leftovers from the multi-page
+conversion: `components/brand/hero-visual.tsx` and the retired section
+components `about/contact/for-doctors/for-patients.tsx` (import-grep
+verified zero references before deletion).
+
+### Verification actually performed
+
+- `bun run typecheck` (web): PASS. `bun run lint` (web): PASS.
+- API unit tests: 4/4 PASS (API untouched; regression check only).
+- Production build in the isolated mirror (`scripts/prod_build.sh`):
+  14/14 static routes, compiled successfully.
+- Production server (`next start`, isolated mirror, :3100): home and
+  /services 200; CSS/JS chunks 200; hero image 200 (93.8 KB WebP @640);
+  consultation image 200 (64 KB WebP @384); served HTML shows the hero
+  preload link, eager+LQIP hero, lazy+LQIP consultation image.
+- Browser verification (agent-browser, Chromium):
+  - Initial visit: overlay server-rendered (curl-verified in HTML),
+    dismissed after hydration, page interactive, zero console/page errors.
+  - Refresh: fresh SSR document (overlay present in HTML by construction)
+    and post-hydration clean dismissal.
+  - Direct navigation to /services: renders with both illustrations.
+  - Internal navigation Home → Services: overlay does NOT reappear.
+  - All 8 routes swept: zero console messages, zero page errors.
+  - Simulated script failure (all JS chunks route-blocked, CSS intact —
+    dev and production): overlay visible with correct design (pixel-
+    verified #FFF9FA background, brand-red ECG trace, burgundy wordmark),
+    then self-hidden via the CSS failsafe; SSR content fully readable
+    afterwards (13,911 text pixels measured; h1 text confirmed).
+  - Mobile 390×844: overlay centered and correct; /services hero 358 px
+    full-width; no horizontal overflow.
+  - Reduced-motion: all preloader animation rules disabled in the
+    compiled CSS (verified by extracting the media blocks).
+- Production vitals (standalone mirror, no throttling — lab numbers):
+  CLS 0 on all routes; FCP: / 496 ms, /about 368, /services 356,
+  /patients 424, /doctors 296, /contact 420, /privacy 308, /terms 296;
+  mobile: / 244, /about 332, /services 336. Load 357–655 ms. LCP entries
+  were not exposed via `performance.getEntriesByType` in this browser
+  build (no observer could be pre-registered through the CLI) — honestly
+  unmeasured this round, not invented.
+- /services payload: 13 JS files ~200 KB + 4 optimized images 68 KB +
+  10 KB CSS + 133 KB fonts — in line with the pre-change home payload;
+  no regression.
+- Environment limitations disclosed: (1) the z-ai vision service was
+  intermittently unstable during this session (several contradictory
+  reads on static files); illustration selection relied on the consistent
+  early rubric round plus deterministic pixel-palette verification, and
+  in-context verification used browser DOM checks + screenshot pixel
+  analysis + a final coherent VLM pass on the production screenshot.
+  (2) Network throttling is not available through the browser CLI — the
+  JS-blocked scenario served as the worst-case slow-network test.
+  (3) The Next 16 standalone server mirrors the monorepo's nested path
+  (`standalone/scripts/prod-build/web/apps/web/`) and did not serve
+  `/_next/static/*`; verification used `next start` against the same
+  build instead.
+
+### Files
+
+Added: `apps/web/src/components/layout/preloader.tsx`,
+`apps/web/public/images/services-expectant-mother.png`,
+`apps/web/public/images/services-doctor-consultation.png`,
+`scripts/process_services_assets.py`, `scripts/services-candidates/*`
+(generation scripts, candidates, VLM verdicts),
+`scripts/qa/preloader-*.png`, `scripts/qa/svc-*.png`,
+`scripts/qa/prod-*.png`.
+Modified: `apps/web/src/app/layout.tsx` (mount Preloader),
+`apps/web/src/app/globals.css` (preloader styles + failsafe +
+reduced-motion rules), `apps/web/src/app/services/page.tsx` (hero visual
++ featured area 02), `apps/web/src/components/ui/page-hero.tsx`
+(optional `visual` prop; no behaviour change for existing callers),
+`apps/web/src/components/brand/service-visuals.tsx`
+(ConsultationVisual removed).
+Deleted: `components/brand/hero-visual.tsx`, retired section components
+(4). No new npm dependencies; API untouched.

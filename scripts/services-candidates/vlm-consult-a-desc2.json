@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "The illustration depicts two figures facing each other in a close, intimate pose. On the left, a person with dark skin wears a loose, long-sleeved white garment and leans forward, resting their hands on the shoulders of the other figure. The second individual, who has lighter skin and short blonde hair, is dressed in a vibrant red tunic with gold trim and looks upward toward the first person. They are positioned in front of a simple, pale blue background that keeps the focus entirely on their interaction. Between them, the composition emphasizes their connection through their touching hands and direct eye contact.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1791862773,
+  "id": "20261013113931e6cb369bc4e64645",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "20261013113931e6cb369bc4e64645",
+  "usage": {
+    "completion_tokens": 120,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 42,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 162
+  }
+}

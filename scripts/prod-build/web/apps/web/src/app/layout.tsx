@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Fraunces, Inter, Noto_Sans_Devanagari } from "next/font/google";
 
 import { MobileBottomNav } from "@/components/layout/mobile-bottom-nav";
+import { Preloader } from "@/components/layout/preloader";
 import { Providers } from "@/components/layout/providers";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -104,6 +105,13 @@ export default function RootLayout({
           >
             Skip to content
           </a>
+          {/*
+            The initial-load transition: server-rendered into every full
+            document load, dismissed by its own effect at hydration (see
+            components/layout/preloader.tsx). Never reappears on client-side
+            navigation because the root layout stays mounted across routes.
+          */}
+          <Preloader />
           <SiteHeader />
           <main id="main" className="flex-1">
             {children}

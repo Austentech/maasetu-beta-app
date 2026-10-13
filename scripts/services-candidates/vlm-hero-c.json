@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Here is the Art Director QA evaluation for the MaaSetu illustration:\n\n**1. SUBJECT**\n*   **Pregnancy:** Yes, the subject is clearly and unmistakably pregnant with a prominent, well-defined bump.\n*   **Appearance:** She presents as Indian (South Asian) with dark hair, warm skin tone, and traditional facial features.\n*   **Pose & Expression:** Seated in a relaxed, slightly reclined pose. Her expression is serene, gentle, and content, conveying maternal warmth.\n\n**2. ANATOMY**\n*   **Hands:** Hands are drawn well; 5 fingers are visible on the prominent hand with correct structure and no fusion or extra digits.\n*   **Face:** Facial features are symmetrical and attractive; eyes are aligned correctly.\n*   **Proportions & Bump:** Body proportions are realistic. The pregnancy bump is plausible for the second trimester, sitting naturally on the torso without looking like a separate object attached to the body.\n*   **Defects:** **None significant.** The anatomy is clean and professional.\n\n**3. TEXT ARTIFACTS**\n*   **Status:** **CLEAN.**\n*   **Detail:** There is no gibberish text, pseudo-lettering, or \"AI hallucination\" scribbles on any elements (including the background charts/icons or clothing patterns). All text areas are either blank, use abstract geometric shapes, or contain legible (if generic) symbols.\n\n**4. STYLE**\n*   **Technique:** Matches the brief perfectly. It features cel-shaded semi-realistic rendering combined with clean, confident dark line art (inked style).\n*   **Palette:** Set against a soft, warm cream/off-white background. The color palette utilizes warm peaches, soft skin tones, and hints of deep burgundy/red in the accents/clothing, aligning with a premium healthcare brand identity.\n\n**5. COMPOSITION**\n*   **Focal Point:** The woman’s face and the curve of her belly act as the clear focal point.\n*   **Whitespace:** There is generous negative space (whitespace) surrounding the subject, which prevents clutter and allows for text overlay if needed by the design team.\n*   **Mood:** The composition is balanced and stable, successfully evoking a calm, trustworthy, and premium mood suitable for maternity care.\n\n**6. VERDICT**\n*   **Score:** **9/10**\n*   **Verdict:** **ACCEPT** (High-quality execution that meets all brand guidelines and technical requirements).",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1791862429,
+  "id": "20261013113329015caa0844574138",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "20261013113329015caa0844574138",
+  "usage": {
+    "completion_tokens": 519,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 218,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 737
+  }
+}

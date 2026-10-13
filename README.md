@@ -42,7 +42,7 @@ maasetu/
 | --- | --- |
 | `/` | Home — hero (consultation illustration, Hinglish headline "Bharat se, Bharat ki Maaon ke liye"), approach, how it works, audience entry points, trust, FAQ |
 | `/about` | Mission story with mother-and-gynecologist illustration, values, honest current status |
-| `/services` | The four intended service areas, each with a hand-drawn spot diagram + care-journey diagram |
+| `/services` | The four intended service areas — hero illustration (expectant mother), care-journey diagram, spot diagrams, and the doctor-consultation illustration in the featured area |
 | `/patients` | Patient-focused overview and honest status of patient access |
 | `/doctors` | Doctor-focused overview and the questions shaping the platform |
 | `/contact` | Real channels only (email + Instagram) — no form, by design |
@@ -51,7 +51,11 @@ maasetu/
 
 All pages are server-rendered and fully static; every page carries its own
 metadata, canonical URL and Open Graph image. The shared footer carries the
-Sankhya Stack maker credit on every public page.
+Sankhya Stack maker credit on every public page. A branded initial-load
+transition (MaaSetu emblem + wordmark) covers the un-hydrated first paint
+of every full document load and dismisses itself the moment React hydrates
+— with a pure-CSS failsafe so it can never get stuck (see
+`docs/ARCHITECTURE.md`).
 
 ## Technology stack
 

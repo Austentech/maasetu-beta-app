@@ -12,6 +12,13 @@ interface PageHeroProps {
   className?: string;
   /** Set when the page opens directly on the deep burgundy band. */
   tone?: "light" | "dark";
+  /**
+   * Optional page-leading visual. When present the opener becomes a
+   * two-column editorial layout — copy on the left, the visual on the
+   * right — matching the homepage hero's composition. Pages that omit
+   * it keep the classic single-column opener, completely unchanged.
+   */
+  visual?: React.ReactNode;
 }
 
 /**
@@ -30,6 +37,7 @@ export function PageHero({
   children,
   className,
   tone = "light",
+  visual,
 }: PageHeroProps) {
   const isDark = tone === "dark";
   const isCenter = align === "center";
@@ -46,46 +54,63 @@ export function PageHero({
           className,
         )}
       >
-        <div className={cn("max-w-3xl", isCenter && "mx-auto text-center")}>
-          <p
+        <div
+          className={cn(
+            "grid items-center gap-12",
+            visual ? "lg:grid-cols-[1.04fr_0.96fr] lg:gap-14" : undefined,
+          )}
+        >
+          <div
             className={cn(
-              "flex items-center gap-3 text-xs font-semibold tracking-[0.22em] uppercase",
-              isCenter && "justify-center",
-              isDark ? "text-peach-300" : "text-brand-500",
+              "max-w-3xl",
+              isCenter && !visual && "mx-auto text-center",
             )}
           >
-            <span
-              aria-hidden="true"
-              className={cn(
-                "h-px w-8",
-                isDark ? "bg-white/25" : "bg-brand-200",
-              )}
-            />
-            {eyebrow}
-            {isCenter ? (
-              <span aria-hidden="true" className="h-px w-8 bg-brand-200" />
-            ) : null}
-          </p>
-          <h1
-            className={cn(
-              "font-display mt-5 text-4xl leading-[1.08] font-medium tracking-tight text-balance sm:text-5xl lg:text-[3.4rem]",
-              isDark ? "text-white" : "text-ink",
-            )}
-          >
-            {title}
-          </h1>
-          {lead ? (
             <p
               className={cn(
-                "mt-6 max-w-2xl text-lg leading-relaxed sm:text-xl",
-                isCenter && "mx-auto",
-                isDark ? "text-peach-200/90" : "text-ink-soft",
+                "flex items-center gap-3 text-xs font-semibold tracking-[0.22em] uppercase",
+                isCenter && "justify-center",
+                isDark ? "text-peach-300" : "text-brand-500",
               )}
             >
-              {lead}
+              <span
+                aria-hidden="true"
+                className={cn(
+                  "h-px w-8",
+                  isDark ? "bg-white/25" : "bg-brand-200",
+                )}
+              />
+              {eyebrow}
+              {isCenter ? (
+                <span aria-hidden="true" className="h-px w-8 bg-brand-200" />
+              ) : null}
             </p>
+            <h1
+              className={cn(
+                "font-display mt-5 text-4xl leading-[1.08] font-medium tracking-tight text-balance sm:text-5xl lg:text-[3.4rem]",
+                isDark ? "text-white" : "text-ink",
+              )}
+            >
+              {title}
+            </h1>
+            {lead ? (
+              <p
+                className={cn(
+                  "mt-6 max-w-2xl text-lg leading-relaxed sm:text-xl",
+                  isCenter && "mx-auto",
+                  isDark ? "text-peach-200/90" : "text-ink-soft",
+                )}
+              >
+                {lead}
+              </p>
+            ) : null}
+            {children ? <div className="mt-8">{children}</div> : null}
+          </div>
+          {visual ? (
+            <div className="mx-auto w-full max-w-[30rem] lg:max-w-[33rem]">
+              {visual}
+            </div>
           ) : null}
-          {children ? <div className="mt-8">{children}</div> : null}
         </div>
       </div>
     </section>

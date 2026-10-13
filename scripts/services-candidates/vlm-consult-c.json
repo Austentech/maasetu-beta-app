@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Here is the Art Director QA evaluation for the MaaSetu illustration:\n\n**1. SUBJECT**\n*   **Pregnancy:** Yes, the subject is clearly and unmistakably pregnant with a full-term or near-full-term bump.\n*   **Appearance:** She presents as Indian/South Asian (dark hair, warm skin tone, traditional jewelry like a maang tikka/bangles, and a saree-style drape).\n*   **Pose & Expression:** Seated in a relaxed, upright posture. The expression is serene, gentle, and content—appropriate for the maternal healthcare context.\n\n**2. ANATOMY**\n*   **Hands:** Hands are generally well-structured; finger count appears correct (5 per hand). However, the shading on the knuckles is slightly soft/indistinct.\n*   **Face:** Facial features are symmetrical and attractive.\n*   **Proportions:** Body proportions are plausible.\n*   **Bump:** The pregnancy bump is large and round, sitting high, which is anatomically plausible for the pose.\n*   **Defects:** *Minor:* The transition between the shoulder and the arm on the viewer's left looks slightly flat/stiff compared to the rest of the rendering.\n\n**3. TEXT ARTIFACTS**\n*   **Status:** **CRITICAL ISSUE DETECTED.**\n*   **Details:** There is visible pseudo-text/gibberish scribbling on the floating document/paper element in the lower-left foreground. There also appear to be meaningless shapes resembling text on the calendar/chart icon in the background. **This is a disqualifier for premium print use** as it reads as \"AI hallucination\" or lazy stock art upon close inspection.\n\n**4. STYLE**\n*   **Technique:** It utilizes a cel-shaded semi-realistic style with soft gradients rather than \"clean dark line art.\" The lines are soft and painterly.\n*   **Background:** The background is a warm cream/off-white.\n*   **Brand Fit:** The color palette (warm peaches, soft reds, creams) aligns perfectly with a premium healthcare brand identity (burgundy/red/peach). It feels warm and inviting.\n\n**5. COMPOSITION**\n*   **Focal Point:** Clear focal point on the mother's face and belly.\n*   **Whitespace:** Generous use of negative space around the subject, allowing for text overlay if needed.\n*   **Mood:** Calm, reassuring, and premium.\n\n**6. VERDICT**\n*   **Score:** 6/10\n*   **Verdict:** **REVISE** (Must remove all gibberish text artifacts and define the line work slightly more to meet premium print standards).",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1791862462,
+  "id": "20261013113409a1495c550814400b",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "20261013113409a1495c550814400b",
+  "usage": {
+    "completion_tokens": 557,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 218,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 775
+  }
+}

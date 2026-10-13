@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "The image is a vertical, full-body photograph of a person standing against a plain, light-colored background.\n\n**Background:**\nThe background is a solid, neutral off-white or light beige color. It is uniform and devoid of any patterns or distinct features.\n\n**Person:**\n*   **Position and Pose:** The subject is standing in the center of the frame, facing the camera directly. Their posture is upright with their arms hanging naturally at their sides.\n*   **Head and Face:** The individual has short, dark hair styled neatly. They are looking straight ahead at the camera with a neutral expression.\n*   **Clothing - Upper Body:** The person is wearing a long-sleeved, crew-neck shirt that is a solid olive green color.\n*   **Clothing - Lower Body:** They are wearing trousers in a shade of tan or khaki. The pants appear to be a standard straight-leg cut.\n*   **Footwear:** On their feet are dark-colored shoes, which appear to be black or dark brown leather dress shoes or boots.\n*   **Action:** The person is standing still for the photograph.\n\n**Objects and Details:**\n*   There are no other people or objects visible in the image besides the central figure and their clothing.\n*   There is no visible writing, text, logos, or symbols on the clothing or in the background.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1791862573,
+  "id": "202610131136080faa2709c50f488e",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "202610131136080faa2709c50f488e",
+  "usage": {
+    "completion_tokens": 276,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 56,
+    "prompt_tokens_details": {
+      "cached_tokens": 0
+    },
+    "total_tokens": 332
+  }
+}

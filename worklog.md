@@ -101,3 +101,22 @@ Stage Summary:
 - All acceptance criteria met with honest, measured verification; no new dependencies; API untouched; no fake functionality added
 - Known environment quirks documented: sandbox dev server needs daemonized restart after memory pressure; standalone monorepo build needs static/+public/ copied to the nested app dir
 - Next: owner supplies Supabase config → JWT validation guard → role model + RLS schema → first protected route
+
+---
+Task ID: 6
+Agent: main (Super Z)
+Task: Services illustration correction + working preloader implementation (owner brief: fix the two Services-page visuals and deliver a functional branded preloader; verify and document)
+
+Work Log:
+- Audited repo: Services page had NO pregnant-mother visual (text opener + journey diagram) and area 02 used an abstract spot SVG; root-caused the "broken preloader" — NO preloader component existed anywhere (2026-10-11 revision had deliberately removed it); 5 dead untracked components found (import-grep verified) and deleted
+- Generated 6 illustration candidates (z-ai CLI, 3 per slot) style-matched to existing assets (pixel-palette verified: warm cream bg, burgundy figures); VLM rubric selection (service stable during selection round): hero-a 9.5/10 and consult-a 9.5/10, zero text artifacts, clean anatomy
+- Integrated via scripts/process_services_assets.py (LQIP pipeline): services-expectant-mother.png as Services opener (PageHero extended with optional `visual` prop → homepage-hero two-column layout; priority+preload+LQIP) and services-doctor-consultation.png as featured area-02 image (lazy+LQIP+caption+alt); ConsultationVisual SVG removed as superseded
+- Implemented preloader.tsx: server-rendered into every full document load, dismissed at hydration (event-driven, no timers/requests), 320ms CSS fade, pure-CSS failsafe caps lifetime ~2.6s (JS-failure-proof), aria-hidden, no focus traps, all animations off under reduced-motion (compiled-CSS verified), never reappears on client navigation; mounted once in root layout
+- Verified in browser (dev + production `next start`): SSR markup present; dismissal post-hydration; internal nav no-reappear; JS-blocked scenario shows correct design then failsafe self-hides with SSR content readable (13,911 text pixels measured); mobile 390 correct + no overflow; all 8 routes zero console/page errors
+- Checks: web typecheck PASS, lint PASS; API unit tests 4/4 PASS (untouched); isolated production build 14/14 static routes; production vitals CLS 0 all routes, FCP 296-496ms desktop / 244-336ms mobile, /services payload 200KB JS + 68KB img + 133KB fonts (no regression); hero image preload link + lazy consult verified in served HTML
+- Docs updated in place: README, PROJECT_CONTEXT, ARCHITECTURE (loading section rewritten — supersedes "no preloader" decision), DEVELOPMENT_GUIDE, IMPLEMENTATION_LOG; SECURITY untouched (no security-relevant change)
+
+Stage Summary:
+- Both Services illustrations live, distinct, responsive, honest; preloader implemented and verified working under normal, refresh, direct-nav, internal-nav, mobile, reduced-motion and JS-failure conditions
+- Known limitations disclosed in IMPLEMENTATION_LOG: z-ai vision intermittently unstable this session (mitigated with pixel-verification + early consistent rubric round + DOM/screenshot checks); no network throttling via CLI (JS-blocked served as worst case); Next 16 standalone nested-path static-serving quirk (used `next start` for prod verification)
+- Next: owner supplies Supabase config → JWT guard → RLS schema → first protected route
